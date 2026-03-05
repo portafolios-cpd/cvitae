@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CVitae — Tu CV generado por IA, listo en minutos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,700;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#04050a;
+  --bg2:#080b12;
+  --surface:rgba(255,255,255,.03);
+  --surface2:rgba(255,255,255,.06);
+  --cyan:#00e5ff;
+  --cyan2:#00b4cc;
+  --lime:#b8ff57;
+  --white:#f0f4ff;
+  --text:#a8b4cc;
+  --muted:#5a6580;
+  --border:rgba(255,255,255,.07);
+  --border2:rgba(0,229,255,.15);
+  --grad:linear-gradient(135deg,#00e5ff,#b8ff57);
+  --grad2:linear-gradient(135deg,#00e5ff 0%,#0088ff 50%,#b8ff57 100%);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* Grain overlay */
+body::before{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--cyan2);border-radius:4px}
+
+.container{max-width:1080px;margin:0 auto;padding:0 1.5rem}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:.9rem 0;background:rgba(4,5,10,.8);backdrop-filter:blur(24px) saturate(1.6);border-bottom:1px solid var(--border)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:700;color:var(--white);text-decoration:none;letter-spacing:-.02em}
+.logo span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:none;gap:2rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.8rem;font-weight:500;text-transform:uppercase;letter-spacing:.08em;transition:color .2s}
+.nav-links a:hover{color:var(--white)}
+.nav-btn{background:var(--grad);color:#000;border:none;padding:.55rem 1.4rem;border-radius:9999px;font-size:.78rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s;text-decoration:none;display:inline-block}
+.nav-btn:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,229,255,.25)}
+@media(min-width:768px){.nav-links{display:flex}}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;align-items:center;padding:7rem 0 4rem;position:relative;overflow:hidden}
+.hero-orb1{position:absolute;top:-10%;right:-5%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,255,.08) 0%,transparent 65%);animation:float 12s ease-in-out infinite;pointer-events:none}
+.hero-orb2{position:absolute;bottom:-20%;left:-10%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(184,255,87,.05) 0%,transparent 65%);animation:float 15s ease-in-out infinite reverse;pointer-events:none}
+.hero-orb3{position:absolute;top:40%;left:40%;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(0,136,255,.04) 0%,transparent 65%);animation:float 10s ease-in-out infinite 3s;pointer-events:none}
+@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-30px)}}
+
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);padding:.4rem 1rem;border-radius:9999px;font-size:.72rem;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.1em;margin-bottom:1.5rem;animation:fadeUp .6s ease both}
+.hero-badge i{font-size:.65rem;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+.hero-title{font-family:'Fraunces',serif;font-size:clamp(2.8rem,6.5vw,5.2rem);font-weight:700;line-height:1.02;color:var(--white);margin-bottom:1rem;animation:fadeUp .6s ease .1s both;letter-spacing:-.03em}
+.hero-title em{font-style:italic;font-weight:300;background:var(--grad2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-title .block{display:block}
+
+.hero-sub{font-size:1.05rem;color:var(--text);max-width:520px;margin-bottom:2rem;line-height:1.7;animation:fadeUp .6s ease .2s both}
+.hero-sub strong{color:var(--white);font-weight:500}
+
+.hero-actions{display:flex;gap:.8rem;flex-wrap:wrap;animation:fadeUp .6s ease .3s both}
+.btn{padding:.8rem 2rem;border-radius:9999px;font-weight:600;font-size:.88rem;cursor:pointer;transition:all .25s;border:none;font-family:inherit;display:inline-flex;align-items:center;gap:.5rem;text-decoration:none}
+.btn-primary{background:var(--grad);color:#000;box-shadow:0 4px 24px rgba(0,229,255,.2)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(0,229,255,.35)}
+.btn-ghost{background:transparent;color:var(--white);border:1px solid var(--border2)}
+.btn-ghost:hover{background:rgba(0,229,255,.06);border-color:var(--cyan)}
+
+.hero-visual{margin-top:3rem;animation:fadeUp .6s ease .4s both}
+.cv-preview-card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:20px;padding:1.5rem;max-width:460px;position:relative;overflow:hidden}
+.cv-preview-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad)}
+.cv-header-mock{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.cv-avatar{width:48px;height:48px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;color:#000;flex-shrink:0}
+.cv-name-mock{font-family:'Fraunces',serif;font-size:1rem;color:var(--white);font-weight:400}
+.cv-role-mock{font-size:.72rem;color:var(--cyan);font-weight:500;margin-top:.1rem}
+.cv-lines{display:flex;flex-direction:column;gap:.5rem}
+.cv-line{height:8px;border-radius:4px;background:rgba(255,255,255,.06)}
+.cv-line.w80{width:80%}.cv-line.w60{width:60%}.cv-line.w90{width:90%}.cv-line.w70{width:70%}.cv-line.w50{width:50%}
+.cv-section-mock{margin-top:1rem}
+.cv-section-label{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--cyan);margin-bottom:.5rem}
+.cv-tags-mock{display:flex;flex-wrap:wrap;gap:.3rem}
+.cv-tag{font-size:.65rem;padding:.2rem .6rem;border-radius:9999px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.15);color:var(--cyan);font-weight:500}
+
+/* Typing animation on card */
+.typing-label{position:absolute;bottom:1rem;right:1rem;font-size:.62rem;color:var(--muted);display:flex;align-items:center;gap:.3rem}
+.typing-dot{width:5px;height:5px;border-radius:50%;background:var(--lime);animation:blink 1.2s infinite}
+.typing-dot:nth-child(2){animation-delay:.2s}.typing-dot:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,100%{opacity:.2}50%{opacity:1}}
+
+/* ── STATS ── */
+.stats{padding:3rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;text-align:center}
+@media(min-width:640px){.stats-grid{grid-template-columns:repeat(4,1fr)}}
+.stat-num{font-family:'Fraunces',serif;font-size:2.4rem;font-weight:700;color:var(--white);line-height:1;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-label{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:.3rem}
+
+/* ── HOW IT WORKS ── */
+.section{padding:5rem 0}
+.section-label{font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);margin-bottom:.6rem}
+.section-title{font-family:'Fraunces',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;color:var(--white);margin-bottom:1rem;letter-spacing:-.02em;line-height:1.1}
+.section-title em{font-style:italic;font-weight:300}
+.section-sub{color:var(--text);font-size:.95rem;max-width:500px;line-height:1.7;margin-bottom:3rem}
+
+.steps{display:grid;grid-template-columns:1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:20px;overflow:hidden}
+@media(min-width:640px){.steps{grid-template-columns:repeat(3,1fr)}}
+.step{background:var(--bg);padding:2rem 1.5rem;position:relative;transition:background .3s}
+.step:hover{background:rgba(0,229,255,.03)}
+.step-num{font-family:'Fraunces',serif;font-size:3rem;font-weight:700;color:rgba(0,229,255,.12);line-height:1;margin-bottom:.8rem}
+.step-icon{width:40px;height:40px;border-radius:12px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.15);display:flex;align-items:center;justify-content:center;color:var(--cyan);font-size:.9rem;margin-bottom:.8rem}
+.step h3{font-size:.95rem;font-weight:600;color:var(--white);margin-bottom:.4rem}
+.step p{font-size:.82rem;color:var(--muted);line-height:1.6}
+
+/* ── PRODUCTOS ── */
+.products{padding:5rem 0;background:var(--bg2)}
+.products-grid{display:grid;grid-template-columns:1fr;gap:1.2rem;margin-top:3rem}
+@media(min-width:640px){.products-grid{grid-template-columns:repeat(2,1fr)}}
+
+.product-card{border-radius:20px;padding:2rem;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s;cursor:pointer}
+.product-card:hover{transform:translateY(-4px)}
+.product-card.basic{background:var(--surface);border:1px solid var(--border)}
+.product-card.basic:hover{border-color:var(--border2);box-shadow:0 12px 40px rgba(0,229,255,.08)}
+.product-card.pro{background:linear-gradient(135deg,rgba(0,229,255,.08),rgba(184,255,87,.05));border:1px solid rgba(0,229,255,.2)}
+.product-card.pro:hover{box-shadow:0 12px 48px rgba(0,229,255,.15)}
+.product-card.pro::before{content:'MÁS POPULAR';position:absolute;top:1rem;right:1rem;font-size:.6rem;font-weight:700;letter-spacing:.12em;background:var(--grad);color:#000;padding:.2rem .7rem;border-radius:9999px}
+
+.product-price{font-family:'Fraunces',serif;font-size:2.4rem;font-weight:700;color:var(--white);line-height:1;margin-bottom:.2rem}
+.product-price span{font-size:.9rem;font-weight:400;color:var(--muted);font-family:'DM Sans',sans-serif}
+.product-name{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--cyan);margin-bottom:1rem}
+.product-desc{font-size:.88rem;color:var(--text);line-height:1.6;margin-bottom:1.5rem}
+.product-features{list-style:none;display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.8rem}
+.product-features li{font-size:.82rem;color:var(--text);display:flex;align-items:center;gap:.5rem}
+.product-features li i{color:var(--lime);font-size:.7rem;flex-shrink:0}
+.product-btn{width:100%;padding:.9rem;border-radius:9999px;font-weight:600;font-size:.85rem;cursor:pointer;font-family:inherit;border:none;transition:all .25s;text-align:center}
+.product-btn.grad{background:var(--grad);color:#000}
+.product-btn.grad:hover{box-shadow:0 6px 24px rgba(0,229,255,.3);transform:translateY(-1px)}
+.product-btn.outline{background:transparent;color:var(--white);border:1px solid var(--border2)}
+.product-btn.outline:hover{background:rgba(0,229,255,.06)}
+
+/* ── FORM ── */
+.form-section{padding:5rem 0}
+.form-wrapper{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:24px;overflow:hidden;max-width:700px;margin:0 auto}
+.form-header{padding:2rem 2rem 1.5rem;border-bottom:1px solid var(--border);background:rgba(0,229,255,.02)}
+.form-header h2{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:700;color:var(--white);margin-bottom:.3rem}
+.form-header p{font-size:.85rem;color:var(--muted)}
+.form-body{padding:2rem}
+.form-step{display:none}
+.form-step.active{display:block}
+.form-step-indicator{display:flex;gap:.5rem;margin-bottom:2rem}
+.step-dot{flex:1;height:3px;border-radius:2px;background:var(--border);transition:background .3s}
+.step-dot.done{background:var(--grad)}
+.step-dot.active{background:var(--cyan)}
+
+.field{margin-bottom:1.2rem}
+.field label{display:block;font-size:.75rem;font-weight:600;color:var(--text);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem}
+.field input,.field textarea,.field select{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:.75rem 1rem;color:var(--white);font-family:inherit;font-size:.88rem;transition:border .2s,background .2s;outline:none}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--cyan);background:rgba(0,229,255,.04)}
+.field input::placeholder,.field textarea::placeholder{color:var(--muted)}
+.field textarea{resize:vertical;min-height:90px}
+.field select option{background:#0d1117;color:var(--white)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:500px){.field-row{grid-template-columns:1fr}}
+
+.upload-area{border:2px dashed var(--border);border-radius:12px;padding:2rem;text-align:center;cursor:pointer;transition:all .3s;position:relative}
+.upload-area:hover,.upload-area.dragover{border-color:var(--cyan);background:rgba(0,229,255,.04)}
+.upload-area i{font-size:1.5rem;color:var(--cyan);margin-bottom:.5rem;display:block}
+.upload-area p{font-size:.82rem;color:var(--muted)}
+.upload-area strong{color:var(--white);font-size:.85rem}
+.upload-area input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.file-list{margin-top:.8rem;display:flex;flex-direction:column;gap:.4rem}
+.file-item{display:flex;align-items:center;gap:.5rem;background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.12);border-radius:8px;padding:.4rem .8rem;font-size:.75rem;color:var(--cyan)}
+.file-item i{font-size:.7rem}
+
+.form-nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border)}
+.btn-back{background:transparent;border:1px solid var(--border);color:var(--muted);padding:.65rem 1.5rem;border-radius:9999px;font-family:inherit;font-size:.82rem;cursor:pointer;transition:all .2s}
+.btn-back:hover{border-color:var(--text);color:var(--text)}
+.btn-next{background:var(--grad);color:#000;border:none;padding:.65rem 1.8rem;border-radius:9999px;font-family:inherit;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-next:hover{box-shadow:0 4px 16px rgba(0,229,255,.3);transform:translateY(-1px)}
+.btn-next:disabled{opacity:.4;cursor:not-allowed;transform:none}
+
+/* AI generating animation */
+.ai-generating{text-align:center;padding:3rem 2rem;display:none}
+.ai-generating.show{display:block}
+.ai-spinner{width:60px;height:60px;border-radius:50%;border:2px solid var(--border);border-top-color:var(--cyan);animation:spin 1s linear infinite;margin:0 auto 1.5rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ai-text{font-family:'Fraunces',serif;font-size:1.2rem;color:var(--white);margin-bottom:.5rem}
+.ai-sub{font-size:.82rem;color:var(--muted)}
+.ai-steps-list{list-style:none;margin-top:1.5rem;display:flex;flex-direction:column;gap:.4rem}
+.ai-step-item{font-size:.78rem;color:var(--muted);display:flex;align-items:center;gap:.5rem;justify-content:center;transition:color .3s}
+.ai-step-item.done{color:var(--lime)}
+.ai-step-item i{font-size:.65rem}
+
+/* Result */
+.cv-result{display:none;padding:1.5rem}
+.cv-result.show{display:block}
+.cv-result-header{text-align:center;margin-bottom:1.5rem}
+.cv-result-header h3{font-family:'Fraunces',serif;font-size:1.4rem;color:var(--white);margin-bottom:.3rem}
+.cv-result-header p{font-size:.82rem;color:var(--muted)}
+.cv-output{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:12px;padding:1.5rem;font-size:.82rem;color:var(--text);line-height:1.8;max-height:300px;overflow-y:auto;margin-bottom:1.5rem;white-space:pre-wrap}
+.result-actions{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center}
+.btn-download{background:var(--grad);color:#000;border:none;padding:.8rem 1.8rem;border-radius:9999px;font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:.5rem;transition:all .2s}
+.btn-download:hover{box-shadow:0 6px 24px rgba(0,229,255,.3);transform:translateY(-1px)}
+.btn-whatsapp{background:#25d366;color:#fff;border:none;padding:.8rem 1.8rem;border-radius:9999px;font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:.5rem;transition:all .2s}
+.btn-whatsapp:hover{background:#1fb855;transform:translateY(-1px)}
+
+/* Payment modal */
+.modal-overlay{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:1.5rem}
+.modal-overlay.show{display:flex}
+.modal{background:#0d1117;border:1px solid var(--border);border-radius:24px;padding:2rem;max-width:420px;width:100%;position:relative}
+.modal::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad);border-radius:24px 24px 0 0}
+.modal-close{position:absolute;top:1rem;right:1rem;background:var(--surface2);border:none;color:var(--muted);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.modal-close:hover{color:var(--white)}
+.modal h3{font-family:'Fraunces',serif;font-size:1.3rem;color:var(--white);margin-bottom:.3rem}
+.modal p{font-size:.82rem;color:var(--muted);margin-bottom:1.5rem}
+.price-tag{font-family:'Fraunces',serif;font-size:2rem;color:var(--white);margin-bottom:.3rem}
+.price-tag span{font-size:.9rem;font-family:'DM Sans',sans-serif;color:var(--muted)}
+.payment-methods{display:flex;flex-direction:column;gap:.7rem;margin-bottom:1.5rem}
+.pay-btn{width:100%;padding:.9rem;border-radius:12px;font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--white);display:flex;align-items:center;justify-content:center;gap:.6rem;transition:all .2s}
+.pay-btn:hover{border-color:var(--cyan);background:rgba(0,229,255,.06)}
+.pay-btn.mp{background:rgba(0,180,150,.08);border-color:rgba(0,180,150,.25);color:#00b496}
+.pay-btn.mp:hover{background:rgba(0,180,150,.12)}
+.pay-note{font-size:.72rem;color:var(--muted);text-align:center}
+
+/* ── EJEMPLOS ── */
+.examples{padding:5rem 0;background:var(--bg2)}
+.examples-grid{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:2.5rem}
+@media(min-width:640px){.examples-grid{grid-template-columns:repeat(3,1fr)}}
+.example-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem;transition:all .3s;cursor:pointer;text-decoration:none;display:block}
+.example-card:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,229,255,.08)}
+.example-profession{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--cyan);margin-bottom:.5rem}
+.example-name{font-family:'Fraunces',serif;font-size:1.1rem;color:var(--white);margin-bottom:.3rem}
+.example-desc{font-size:.78rem;color:var(--muted);line-height:1.5}
+.example-tag{display:inline-block;margin-top:.8rem;font-size:.65rem;font-weight:600;padding:.2rem .6rem;border-radius:9999px;background:rgba(184,255,87,.08);border:1px solid rgba(184,255,87,.2);color:var(--lime)}
+
+/* ── FAQ ── */
+.faq{padding:5rem 0}
+.faq-list{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:.6rem}
+.faq-item{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border .2s}
+.faq-item.open{border-color:var(--border2)}
+.faq-q{padding:1.1rem 1.3rem;font-size:.9rem;font-weight:500;color:var(--white);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.faq-q i{font-size:.75rem;color:var(--cyan);transition:transform .3s;flex-shrink:0}
+.faq-item.open .faq-q i{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s}
+.faq-item.open .faq-a{max-height:200px;padding:0 1.3rem 1.1rem}
+.faq-a p{font-size:.82rem;color:var(--muted);line-height:1.7}
+
+/* ── CTA FINAL ── */
+.cta-final{padding:6rem 0;text-align:center;position:relative;overflow:hidden}
+.cta-final::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(0,229,255,.05) 0%,transparent 65%);pointer-events:none}
+.cta-final h2{font-family:'Fraunces',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;color:var(--white);margin-bottom:1rem;letter-spacing:-.02em}
+.cta-final h2 em{font-style:italic;font-weight:300;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cta-final p{color:var(--text);font-size:.95rem;max-width:420px;margin:0 auto 2rem;line-height:1.7}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:2rem 0}
+.footer-inner{display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center}
+@media(min-width:640px){.footer-inner{flex-direction:row;justify-content:space-between;text-align:left}}
+.footer-logo{font-family:'Fraunces',serif;font-size:1.1rem;color:var(--white)}
+.footer-logo span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.footer-links{display:flex;gap:1.5rem;list-style:none}
+.footer-links a{font-size:.75rem;color:var(--muted);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--white)}
+.footer-copy{font-size:.72rem;color:var(--muted)}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* Mobile menu */
+.hamburger{display:flex;flex-direction:column;gap:4px;cursor:pointer;padding:.4rem}
+.hamburger span{width:20px;height:2px;background:var(--text);border-radius:2px;transition:all .3s}
+@media(min-width:768px){.hamburger{display:none}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="container nav-inner">
+    <a href="#" class="logo">CV<span>itae</span></a>
+    <ul class="nav-links">
+      <li><a href="#como-funciona">Cómo funciona</a></li>
+      <li><a href="#precios">Precios</a></li>
+      <li><a href="#ejemplos">Ejemplos</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a href="#generar" class="nav-btn">Crear mi CV</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-orb1"></div>
+  <div class="hero-orb2"></div>
+  <div class="hero-orb3"></div>
+  <div class="container">
+    <div class="hero-badge"><i class="fas fa-bolt"></i> Powered by IA · Listo en minutos</div>
+    <h1 class="hero-title">
+      Tu CV generado<br>
+      <em>especialmente</em>
+      <span class="block">para ese trabajo.</span>
+    </h1>
+    <p class="hero-sub">Cargás tu trayectoria, pegás la descripción del puesto y la IA arma un CV <strong>adaptado exactamente a lo que buscan.</strong> No más CVs genéricos que nadie lee.</p>
+    <div class="hero-actions">
+      <a href="#generar" class="btn btn-primary"><i class="fas fa-wand-magic-sparkles"></i> Generá tu CV ahora</a>
+      <a href="#ejemplos" class="btn btn-ghost"><i class="fas fa-eye"></i> Ver ejemplos</a>
+    </div>
+    <div class="hero-visual">
+      <div class="cv-preview-card">
+        <div class="cv-header-mock">
+          <div class="cv-avatar">JS</div>
+          <div>
+            <div class="cv-name-mock">Juan Solís</div>
+            <div class="cv-role-mock">Analista Financiero · Banco Nacional PY</div>
+          </div>
+        </div>
+        <div class="cv-lines">
+          <div class="cv-line w90"></div>
+          <div class="cv-line w80"></div>
+          <div class="cv-line w60"></div>
+        </div>
+        <div class="cv-section-mock">
+          <div class="cv-section-label">Habilidades clave para este puesto</div>
+          <div class="cv-tags-mock">
+            <div class="cv-tag">Análisis financiero</div>
+            <div class="cv-tag">Excel avanzado</div>
+            <div class="cv-tag">Power BI</div>
+            <div class="cv-tag">Auditoría</div>
+          </div>
+        </div>
+        <div class="typing-label">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          IA generando...
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="fade-in"><div class="stat-num">2 min</div><div class="stat-label">Tiempo promedio</div></div>
+      <div class="fade-in"><div class="stat-num">100%</div><div class="stat-label">Personalizado</div></div>
+      <div class="fade-in"><div class="stat-num">₲50k</div><div class="stat-label">Precio CV PDF</div></div>
+      <div class="fade-in"><div class="stat-num">48hs</div><div class="stat-label">Portafolio web</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CÓMO FUNCIONA -->
+<section class="section" id="como-funciona">
+  <div class="container">
+    <div class="section-label">El proceso</div>
+    <h2 class="section-title fade-in">Tres pasos y <em>listo.</em></h2>
+    <p class="section-sub fade-in">Sin formularios interminables. Sin esperas. Solo tu información y el puesto al que querés aplicar.</p>
+    <div class="steps fade-in">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-icon"><i class="fas fa-user-pen"></i></div>
+        <h3>Contás tu historia</h3>
+        <p>Completás un formulario simple con tu experiencia, estudios y certificados. Sin tecnicismos.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-icon"><i class="fas fa-bullseye"></i></div>
+        <h3>Pegás el puesto</h3>
+        <p>Copiás la descripción del trabajo al que querés aplicar. La IA analiza qué buscan exactamente.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-icon"><i class="fas fa-file-arrow-down"></i></div>
+        <h3>Recibís tu CV</h3>
+        <p>En minutos tenés un CV armado y adaptado para ese puesto específico, listo para enviar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRECIOS -->
+<section class="products" id="precios">
+  <div class="container">
+    <div class="section-label">Planes</div>
+    <h2 class="section-title fade-in">Simple y <em>sin sorpresas.</em></h2>
+    <p class="section-sub fade-in">Pago único. Sin suscripciones. Sin letra chica.</p>
+    <div class="products-grid">
+      <div class="product-card basic fade-in" onclick="openModal('basic')">
+        <div class="product-name">CV Digital</div>
+        <div class="product-price">₲50.000 <span>pago único</span></div>
+        <p class="product-desc">CV en PDF generado por IA, adaptado al trabajo que buscás. Listo para descargar y enviar.</p>
+        <ul class="product-features">
+          <li><i class="fas fa-check"></i> CV en PDF profesional</li>
+          <li><i class="fas fa-check"></i> Adaptado al puesto específico</li>
+          <li><i class="fas fa-check"></i> Diseño limpio y moderno</li>
+          <li><i class="fas fa-check"></i> Entrega inmediata</li>
+          <li><i class="fas fa-check"></i> 1 revisión incluida</li>
+        </ul>
+        <button class="product-btn outline">Quiero este plan</button>
+      </div>
+      <div class="product-card pro fade-in" onclick="openModal('pro')">
+        <div class="product-name">Portafolio Web</div>
+        <div class="product-price">₲120.000 <span>pago único</span></div>
+        <p class="product-desc">Tu perfil profesional online con link propio, CV descargable, certificados verificables y botón de contacto.</p>
+        <ul class="product-features">
+          <li><i class="fas fa-check"></i> Todo del plan CV</li>
+          <li><i class="fas fa-check"></i> Link propio (tunombre.github.io)</li>
+          <li><i class="fas fa-check"></i> Certificados verificables</li>
+          <li><i class="fas fa-check"></i> Diseño premium personalizado</li>
+          <li><i class="fas fa-check"></i> Entrega en 48 horas</li>
+          <li><i class="fas fa-check"></i> 6 actualizaciones gratis/año</li>
+        </ul>
+        <button class="product-btn grad">Quiero este plan</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GENERADOR IA -->
+<section class="form-section" id="generar">
+  <div class="container">
+    <div class="section-label" style="text-align:center">Generador IA</div>
+    <h2 class="section-title fade-in" style="text-align:center;margin-bottom:.5rem">Probá ahora <em>gratis.</em></h2>
+    <p style="text-align:center;color:var(--muted);font-size:.85rem;margin-bottom:2.5rem">Generamos una vista previa de tu CV. Para descargar el PDF final elegís tu plan.</p>
+    <div class="form-wrapper">
+      <div class="form-header">
+        <h2>Crear mi CV con IA</h2>
+        <p>3 pasos simples · Menos de 3 minutos</p>
+      </div>
+      <div class="form-body">
+        <div class="form-step-indicator">
+          <div class="step-dot active" id="dot1"></div>
+          <div class="step-dot" id="dot2"></div>
+          <div class="step-dot" id="dot3"></div>
+        </div>
+
+        <!-- STEP 1 -->
+        <div class="form-step active" id="step1">
+          <div class="field-row">
+            <div class="field">
+              <label>Nombre completo</label>
+              <input type="text" id="fname" placeholder="Ej: María González">
+            </div>
+            <div class="field">
+              <label>Profesión</label>
+              <input type="text" id="fprofession" placeholder="Ej: Contadora">
+            </div>
+          </div>
+          <div class="field">
+            <label>¿Cuántos años de experiencia tenés?</label>
+            <select id="fexp">
+              <option value="">Seleccioná...</option>
+              <option value="Sin experiencia (recién graduado)">Sin experiencia (recién graduado)</option>
+              <option value="1-2 años">1-2 años</option>
+              <option value="3-5 años">3-5 años</option>
+              <option value="6-10 años">6-10 años</option>
+              <option value="Más de 10 años">Más de 10 años</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Contanos brevemente tu experiencia más relevante</label>
+            <textarea id="fexperience" placeholder="Ej: Trabajé 3 años como contadora en una empresa importadora. Manejé balances, liquidación de sueldos y declaraciones impositivas..."></textarea>
+          </div>
+          <div class="form-nav">
+            <div></div>
+            <button class="btn-next" onclick="goStep(2)">Siguiente <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="form-step" id="step2">
+          <div class="field">
+            <label>Estudios / Formación</label>
+            <input type="text" id="feducation" placeholder="Ej: Lic. en Contabilidad — UNA 2019">
+          </div>
+          <div class="field">
+            <label>Certificados o cursos destacados</label>
+            <input type="text" id="fcerts" placeholder="Ej: Excel avanzado, SAP básico, inglés B2...">
+          </div>
+          <div class="field">
+            <label>Habilidades clave</label>
+            <input type="text" id="fskills" placeholder="Ej: Trabajo en equipo, liderazgo, análisis de datos...">
+          </div>
+          <div class="form-nav">
+            <button class="btn-back" onclick="goStep(1)"><i class="fas fa-arrow-left"></i> Atrás</button>
+            <button class="btn-next" onclick="goStep(3)">Siguiente <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="form-step" id="step3">
+          <div class="field">
+            <label>¿A qué trabajo querés aplicar?</label>
+            <input type="text" id="fjob" placeholder="Ej: Analista contable en empresa logística">
+          </div>
+          <div class="field">
+            <label>Pegá la descripción del puesto (opcional pero muy recomendado)</label>
+            <textarea id="fjobdesc" style="min-height:120px" placeholder="Copiá y pegá el texto del aviso de trabajo. La IA usará esto para adaptar tu CV exactamente a lo que buscan..."></textarea>
+          </div>
+          <div class="form-nav">
+            <button class="btn-back" onclick="goStep(2)"><i class="fas fa-arrow-left"></i> Atrás</button>
+            <button class="btn-next" id="generateBtn" onclick="generateCV()"><i class="fas fa-wand-magic-sparkles"></i> Generar mi CV</button>
+          </div>
+        </div>
+
+        <!-- AI GENERATING -->
+        <div class="ai-generating" id="aiGenerating">
+          <div class="ai-spinner"></div>
+          <div class="ai-text">La IA está armando tu CV...</div>
+          <div class="ai-sub">Analizando el puesto y adaptando tu perfil</div>
+          <ul class="ai-steps-list" id="aiStepsList">
+            <li class="ai-step-item" id="ais1"><i class="fas fa-circle"></i> Analizando descripción del puesto</li>
+            <li class="ai-step-item" id="ais2"><i class="fas fa-circle"></i> Identificando palabras clave</li>
+            <li class="ai-step-item" id="ais3"><i class="fas fa-circle"></i> Adaptando experiencia y habilidades</li>
+            <li class="ai-step-item" id="ais4"><i class="fas fa-circle"></i> Redactando perfil profesional</li>
+            <li class="ai-step-item" id="ais5"><i class="fas fa-circle"></i> Finalizando formato</li>
+          </ul>
+        </div>
+
+        <!-- RESULT -->
+        <div class="cv-result" id="cvResult">
+          <div class="cv-result-header">
+            <h3>✅ Tu CV está listo</h3>
+            <p>Vista previa generada. Para descargar el PDF elegí tu plan.</p>
+          </div>
+          <div class="cv-output" id="cvOutput"></div>
+          <div class="result-actions">
+            <button class="btn-download" onclick="openModal('basic')"><i class="fas fa-download"></i> Descargar PDF — ₲50.000</button>
+            <button class="btn-whatsapp" onclick="contactWhatsApp()"><i class="fab fa-whatsapp"></i> Consultar</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EJEMPLOS -->
+<section class="examples" id="ejemplos">
+  <div class="container">
+    <div class="section-label">Ejemplos reales</div>
+    <h2 class="section-title fade-in">Portafolios que <em>consiguen</em> entrevistas.</h2>
+    <div class="examples-grid">
+      <a href="https://isasola.github.io" target="_blank" class="example-card fade-in">
+        <div class="example-profession">Cooperación Internacional</div>
+        <div class="example-name">Julio Solaeche</div>
+        <div class="example-desc">Gestor de proyectos con experiencia en BID, ONGs internacionales y cooperación global.</div>
+        <div class="example-tag">Ver portafolio →</div>
+      </a>
+      <div class="example-card fade-in">
+        <div class="example-profession">Abogada Corporativa</div>
+        <div class="example-name">Valentina R.</div>
+        <div class="example-desc">Fallos, publicaciones y certificaciones organizadas en un portafolio verificable.</div>
+        <div class="example-tag">Próximamente</div>
+      </div>
+      <div class="example-card fade-in">
+        <div class="example-profession">Ingeniero Civil</div>
+        <div class="example-name">Carlos M.</div>
+        <div class="example-desc">Proyectos, obras y certificaciones técnicas con documentación verificable.</div>
+        <div class="example-tag">Próximamente</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="section-label" style="text-align:center">Preguntas</div>
+    <h2 class="section-title fade-in" style="text-align:center;margin-bottom:2.5rem">Todo lo que <em>querés saber.</em></h2>
+    <div class="faq-list">
+      <div class="faq-item fade-in">
+        <div class="faq-q" onclick="toggleFaq(this)">¿Cómo pago? ¿Aceptan transferencia? <i class="fas fa-chevron-down"></i></div>
+        <div class="faq-a"><p>Aceptamos transferencia bancaria, Tigo Money, billetera personal y efectivo en Asunción. Coordinamos por WhatsApp antes de empezar.</p></div>
+      </div>
+      <div class="faq-item fade-in">
+        <div class="faq-q" onclick="toggleFaq(this)">¿El CV lo hace realmente una IA o lo hacen personas? <i class="fas fa-chevron-down"></i></div>
+        <div class="faq-a"><p>La IA genera el contenido y la estructura adaptada al puesto. Luego un humano revisa que todo quede perfecto antes de entregártelo. Lo mejor de los dos mundos.</p></div>
+      </div>
+      <div class="faq-item fade-in">
+        <div class="faq-q" onclick="toggleFaq(this)">¿Qué pasa si no me gusta el resultado? <i class="fas fa-chevron-down"></i></div>
+        <div class="faq-a"><p>Todos los planes incluyen al menos 1 revisión gratuita. Si algo no te convence, lo ajustamos. Tu satisfacción es la prioridad.</p></div>
+      </div>
+      <div class="faq-item fade-in">
+        <div class="faq-q" onclick="toggleFaq(this)">¿El portafolio web es un link permanente? <i class="fas fa-chevron-down"></i></div>
+        <div class="faq-a"><p>Sí. Tu portafolio queda online de forma permanente en un link propio. No hay pagos mensuales ni suscripciones. Pagás una vez y es tuyo.</p></div>
+      </div>
+      <div class="faq-item fade-in">
+        <div class="faq-q" onclick="toggleFaq(this)">¿Puedo pedir un CV para aplicar a trabajos en el exterior? <i class="fas fa-chevron-down"></i></div>
+        <div class="faq-a"><p>Perfectamente. La IA puede adaptar tu CV al formato y expectativas de empresas en Argentina, Brasil, España, EEUU o cualquier otro país.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <div class="container">
+    <h2>Tu próximo trabajo <em>empieza</em><br>con el CV correcto.</h2>
+    <p>Profesionales con CV adaptado consiguen hasta 3x más entrevistas. El tuyo puede estar listo hoy.</p>
+    <a href="#generar" class="btn btn-primary" style="font-size:.95rem;padding:.9rem 2.5rem"><i class="fas fa-wand-magic-sparkles"></i> Generá tu CV ahora — es gratis</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container footer-inner">
+    <div class="footer-logo">CV<span>itae</span> · Asunción, Paraguay</div>
+    <ul class="footer-links">
+      <li><a href="#como-funciona">Cómo funciona</a></li>
+      <li><a href="#precios">Precios</a></li>
+      <li><a href="#ejemplos">Ejemplos</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 CVitae · isasolaeche@gmail.com</div>
+  </div>
+</footer>
+
+<!-- PAYMENT MODAL -->
+<div class="modal-overlay" id="payModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    <h3 id="modalTitle">CV Digital</h3>
+    <p id="modalDesc">Recibís tu CV en PDF listo para enviar.</p>
+    <div class="price-tag" id="modalPrice">₲50.000 <span>pago único</span></div>
+    <div class="payment-methods">
+      <button class="pay-btn mp" onclick="contactWhatsApp()"><i class="fab fa-whatsapp"></i> Coordinar pago por WhatsApp</button>
+      <button class="pay-btn" onclick="contactWhatsApp()"><i class="fas fa-building-columns"></i> Transferencia bancaria</button>
+      <button class="pay-btn" onclick="contactWhatsApp()"><i class="fas fa-mobile-alt"></i> Tigo Money / Billetera Personal</button>
+    </div>
+    <p class="pay-note">Al hacer clic te contactamos por WhatsApp para coordinar el pago y empezar.</p>
+  </div>
+</div>
+
+<script>
+// ── NAVIGATION ──
+function goStep(n) {
+  document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.step-dot').forEach((d,i) => {
+    d.classList.remove('active','done');
+    if(i < n-1) d.classList.add('done');
+    if(i === n-1) d.classList.add('active');
+  });
+  document.getElementById('step'+n).classList.add('active');
+}
+
+// ── AI CV GENERATION ──
+async function generateCV() {
+  const name = document.getElementById('fname').value.trim();
+  const profession = document.getElementById('fprofession').value.trim();
+  const exp = document.getElementById('fexp').value;
+  const experience = document.getElementById('fexperience').value.trim();
+  const education = document.getElementById('feducation').value.trim();
+  const certs = document.getElementById('fcerts').value.trim();
+  const skills = document.getElementById('fskills').value.trim();
+  const job = document.getElementById('fjob').value.trim();
+  const jobdesc = document.getElementById('fjobdesc').value.trim();
+
+  if (!name || !profession || !job) {
+    alert('Por favor completá al menos tu nombre, profesión y el puesto al que aplicás.');
+    return;
+  }
+
+  // Hide step, show generating
+  document.getElementById('step3').classList.remove('active');
+  document.getElementById('aiGenerating').classList.add('show');
+  document.querySelectorAll('.step-dot').forEach(d => d.classList.add('done'));
+
+  // Animate AI steps
+  const aiSteps = ['ais1','ais2','ais3','ais4','ais5'];
+  for(let i = 0; i < aiSteps.length; i++) {
+    await delay(800);
+    document.getElementById(aiSteps[i]).classList.add('done');
+    document.getElementById(aiSteps[i]).querySelector('i').className = 'fas fa-check';
+  }
+
+  // Call Claude API
+  const prompt = `Eres un experto en recursos humanos y redacción de CVs profesionales para el mercado latinoamericano.
+
+Generá un CV profesional en español para la siguiente persona:
+
+DATOS:
+- Nombre: ${name}
+- Profesión: ${profession}
+- Experiencia: ${exp}
+- Descripción de experiencia: ${experience || 'No especificada'}
+- Educación: ${education || 'No especificada'}
+- Certificados/Cursos: ${certs || 'No especificados'}
+- Habilidades: ${skills || 'No especificadas'}
+
+PUESTO AL QUE APLICA: ${job}
+${jobdesc ? `\nDESCRIPCIÓN DEL PUESTO:\n${jobdesc}` : ''}
+
+INSTRUCCIONES:
+- Adaptá el CV específicamente para el puesto indicado
+- Usá las palabras clave del puesto en la descripción
+- Escribí un perfil profesional impactante de 3-4 líneas
+- Resaltá las habilidades más relevantes para ESE puesto específico
+- Formato: texto limpio y profesional, sin símbolos raros
+- Incluí secciones: PERFIL PROFESIONAL, EXPERIENCIA, EDUCACIÓN, HABILIDADES CLAVE, CERTIFICACIONES
+- Tono profesional pero natural, en español rioplatense`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await res.json();
+    const cvText = data.content?.[0]?.text || 'Error generando el CV. Intentá de nuevo.';
+
+    document.getElementById('aiGenerating').classList.remove('show');
+    document.getElementById('cvOutput').textContent = cvText;
+    document.getElementById('cvResult').classList.add('show');
+
+  } catch(e) {
+    document.getElementById('aiGenerating').classList.remove('show');
+    document.getElementById('cvOutput').textContent = 'Hubo un error de conexión. Por favor escribinos por WhatsApp y te ayudamos directamente.';
+    document.getElementById('cvResult').classList.add('show');
+  }
+}
+
+function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// ── MODAL ──
+function openModal(type) {
+  const modal = document.getElementById('payModal');
+  if(type === 'pro') {
+    document.getElementById('modalTitle').textContent = 'Portafolio Web Premium';
+    document.getElementById('modalDesc').textContent = 'Recibís tu portafolio online con link propio en 48 horas.';
+    document.getElementById('modalPrice').innerHTML = '₲120.000 <span>pago único</span>';
+  } else {
+    document.getElementById('modalTitle').textContent = 'CV Digital';
+    document.getElementById('modalDesc').textContent = 'Recibís tu CV en PDF adaptado al puesto, listo para enviar.';
+    document.getElementById('modalPrice').innerHTML = '₲50.000 <span>pago único</span>';
+  }
+  modal.classList.add('show');
+}
+function closeModal() { document.getElementById('payModal').classList.remove('show'); }
+document.getElementById('payModal').addEventListener('click', e => { if(e.target === e.currentTarget) closeModal(); });
+
+// ── WHATSAPP ──
+function contactWhatsApp() {
+  const msg = encodeURIComponent('Hola! Vi CVitae y quiero hacer mi CV/portafolio. ¿Me pueden ayudar?');
+  window.open(`https://wa.me/595992954169?text=${msg}`, '_blank');
+}
+
+// ── FAQ ──
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if(!isOpen) item.classList.add('open');
+}
+
+// ── SCROLL ANIMATIONS ──
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ── SMOOTH SCROLL ──
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if(target) { e.preventDefault(); window.scrollTo({ top: target.offsetTop - 60, behavior: 'smooth' }); }
+  });
+});
+</script>
+</body>
+</html>
