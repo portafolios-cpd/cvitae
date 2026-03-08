@@ -3,199 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="CVitae — Tu CV generado por IA, adaptado al puesto exacto. Listo en minutos. Paraguay y el mundo.">
+<meta name="description" content="CVitae — Tu CV generado por IA, adaptado al puesto exacto. Listo en minutos.">
 <title>CVitae — Tu CV generado por IA, listo en minutos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,700;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-/* =====================================================
-   RESET & BASE
-   ===================================================== */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-
-/* =====================================================
-   TEMA OSCURO (default)
-   ===================================================== */
-:root {
-  /* Colores base — dark */
-  --bg: #04050a;
-  --bg2: #080b12;
-  --surface: rgba(255,255,255,0.03);
-  --surface2: rgba(255,255,255,0.06);
-  --white: #f0f4ff;
-  --text: #a8b4cc;
-  --muted: #5a6580;
-  --border: rgba(255,255,255,0.07);
-
-  /* Acento — cyan (default) */
-  --cyan: #00e5ff;
-  --cyan2: #00b4cc;
-  --lime: #b8ff57;
-  --grad: linear-gradient(135deg, #00e5ff, #b8ff57);
-  --grad2: linear-gradient(135deg, #00e5ff 0%, #0088ff 50%, #b8ff57 100%);
-  --cyan-rgb: 0,229,255;
-  --lime-rgb: 184,255,87;
-  --border2: rgba(0,229,255,0.15);
-  --nav-bg: rgba(4,5,10,0.85);
+:root{
+  --bg:#04050a;--bg2:#080b12;
+  --surface:rgba(255,255,255,0.03);--surface2:rgba(255,255,255,0.06);
+  --white:#f0f4ff;--text:#a8b4cc;--muted:#5a6580;
+  --border:rgba(255,255,255,0.07);--border2:rgba(0,229,255,0.15);
+  --nav-bg:rgba(4,5,10,0.85);
+  --cyan:#00e5ff;--cyan2:#00b4cc;--lime:#b8ff57;
+  --grad:linear-gradient(135deg,#00e5ff,#b8ff57);
+  --grad2:linear-gradient(135deg,#00e5ff 0%,#0088ff 50%,#b8ff57 100%);
+  --cyan-rgb:0,229,255;--lime-rgb:184,255,87;
 }
-
-/* =====================================================
-   TEMA CLARO — clase en <html>
-   ===================================================== */
-html.theme-light {
-  --bg: #f0f4fa;
-  --bg2: #ffffff;
-  --surface: rgba(0,0,0,0.025);
-  --surface2: rgba(0,0,0,0.045);
-  --white: #0f1623;
-  --text: #2d3748;
-  --muted: #64748b;
-  --border: rgba(0,0,0,0.08);
-  --nav-bg: rgba(240,244,250,0.92);
+html.theme-light{
+  --bg:#f0f4fa;--bg2:#ffffff;
+  --surface:rgba(0,0,0,0.025);--surface2:rgba(0,0,0,0.045);
+  --white:#0f1623;--text:#2d3748;--muted:#64748b;
+  --border:rgba(0,0,0,0.08);--nav-bg:rgba(240,244,250,0.92);
 }
-
-/* =====================================================
-   ACENTOS — clase en <html>
-   ===================================================== */
-html.accent-purple {
-  --cyan: #b794f4; --cyan2: #9f7aea; --lime: #fbbf24;
-  --grad: linear-gradient(135deg,#b794f4,#fbbf24);
-  --grad2: linear-gradient(135deg,#b794f4 0%,#9f7aea 50%,#fbbf24 100%);
-  --cyan-rgb: 183,148,244; --lime-rgb: 251,191,36;
-  --border2: rgba(183,148,244,0.2);
-}
-html.accent-blue {
-  --cyan: #4299e1; --cyan2: #3182ce; --lime: #a0d2ff;
-  --grad: linear-gradient(135deg,#4299e1,#a0d2ff);
-  --grad2: linear-gradient(135deg,#4299e1 0%,#3182ce 50%,#a0d2ff 100%);
-  --cyan-rgb: 66,153,225; --lime-rgb: 160,210,255;
-  --border2: rgba(66,153,225,0.2);
-}
-html.accent-warm {
-  --cyan: #f687b3; --cyan2: #ed64a6; --lime: #fbbf24;
-  --grad: linear-gradient(135deg,#f687b3,#fbbf24);
-  --grad2: linear-gradient(135deg,#f687b3 0%,#ed64a6 50%,#fbbf24 100%);
-  --cyan-rgb: 246,135,179; --lime-rgb: 251,191,36;
-  --border2: rgba(246,135,179,0.2);
-}
-
-/* =====================================================
-   GLOBALS
-   ===================================================== */
+html.accent-purple{--cyan:#b794f4;--cyan2:#9f7aea;--lime:#fbbf24;--grad:linear-gradient(135deg,#b794f4,#fbbf24);--grad2:linear-gradient(135deg,#b794f4,#9f7aea,#fbbf24);--cyan-rgb:183,148,244;--lime-rgb:251,191,36;--border2:rgba(183,148,244,0.2)}
+html.accent-blue{--cyan:#4299e1;--cyan2:#3182ce;--lime:#a0d2ff;--grad:linear-gradient(135deg,#4299e1,#a0d2ff);--grad2:linear-gradient(135deg,#4299e1,#3182ce,#a0d2ff);--cyan-rgb:66,153,225;--lime-rgb:160,210,255;--border2:rgba(66,153,225,0.2)}
+html.accent-warm{--cyan:#f687b3;--cyan2:#ed64a6;--lime:#fbbf24;--grad:linear-gradient(135deg,#f687b3,#fbbf24);--grad2:linear-gradient(135deg,#f687b3,#ed64a6,#fbbf24);--cyan-rgb:246,135,179;--lime-rgb:251,191,36;--border2:rgba(246,135,179,0.2)}
 html{scroll-behavior:smooth}
-body{
-  font-family:'DM Sans',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  line-height:1.6;
-  overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
-  transition:background-color .3s,color .3s;
-}
-/* Noise overlay */
-body::before{
-  content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.025;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--cyan2);border-radius:4px}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--cyan2);border-radius:4px}
 .container{max-width:1080px;margin:0 auto;padding:0 1.5rem}
 
-/* =====================================================
-   THEME SWITCHER — esquina superior derecha
-   ===================================================== */
-.theme-switcher{
-  position:fixed;top:76px;right:16px;z-index:1000;
-  background:var(--bg2);
-  border:1px solid var(--border2);
-  border-radius:40px;
-  padding:6px 8px;
-  backdrop-filter:blur(16px);
-  display:flex;gap:6px;align-items:center;
-  box-shadow:0 4px 24px rgba(0,0,0,.25);
-  transition:opacity .3s;
-}
-/* Ocultar en móvil pequeño para no tapar contenido */
-@media(max-width:480px){.theme-switcher{top:auto;bottom:90px;right:16px}}
-
-.theme-btn{
-  width:36px;height:36px;border-radius:50%;border:2px solid transparent;
-  cursor:pointer;transition:all .2s;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1rem;background:var(--surface);color:var(--text);
-  outline:none;
-}
-.theme-btn:hover{color:var(--white)}
-.theme-btn.active{border-color:var(--cyan);color:var(--cyan)}
-
-.sep{width:1px;height:26px;background:var(--border)}
-
-.accent-btn{
-  width:28px;height:28px;border-radius:50%;border:2px solid transparent;
-  cursor:pointer;transition:all .2s;outline:none;
-  flex-shrink:0;
-}
+/* THEME SWITCHER */
+.theme-switcher{position:fixed;top:76px;right:16px;z-index:1000;background:var(--bg2);border:1px solid var(--border2);border-radius:40px;padding:6px 8px;backdrop-filter:blur(16px);display:flex;gap:6px;align-items:center;box-shadow:0 4px 24px rgba(0,0,0,.25)}
+@media(max-width:480px){.theme-switcher{top:auto;bottom:90px;right:12px}}
+.theme-btn{width:36px;height:36px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;font-size:1rem;background:var(--surface);color:var(--text);outline:none}
+.theme-btn:hover,.theme-btn.active{border-color:var(--cyan);color:var(--cyan)}
+.tsep{width:1px;height:26px;background:var(--border)}
+.accent-btn{width:28px;height:28px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:all .2s;outline:none;flex-shrink:0}
 .accent-btn.active{border-color:var(--white);transform:scale(1.15)}
 .accent-btn[data-accent="cyan"]{background:linear-gradient(135deg,#00e5ff,#b8ff57)}
 .accent-btn[data-accent="purple"]{background:linear-gradient(135deg,#b794f4,#fbbf24)}
 .accent-btn[data-accent="blue"]{background:linear-gradient(135deg,#4299e1,#a0d2ff)}
 .accent-btn[data-accent="warm"]{background:linear-gradient(135deg,#f687b3,#fbbf24)}
 
-/* =====================================================
-   NAV
-   ===================================================== */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:999;
-  padding:.9rem 0;
-  background:var(--nav-bg);
-  backdrop-filter:blur(24px) saturate(1.6);
-  border-bottom:1px solid var(--border);
-  transition:background .3s;
-}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:.9rem 0;background:var(--nav-bg);backdrop-filter:blur(24px) saturate(1.6);border-bottom:1px solid var(--border);transition:background .3s}
 .nav-inner{display:flex;align-items:center;justify-content:space-between}
 .logo{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:700;color:var(--white);text-decoration:none;letter-spacing:-.02em}
 .logo span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .nav-links{display:none;gap:2rem;list-style:none}
 .nav-links a{color:var(--muted);text-decoration:none;font-size:.8rem;font-weight:500;text-transform:uppercase;letter-spacing:.08em;transition:color .2s}
 .nav-links a:hover{color:var(--white)}
-.nav-btn{
-  background:var(--grad);color:#000;border:none;
-  padding:.55rem 1.4rem;border-radius:9999px;
-  font-size:.78rem;font-weight:600;cursor:pointer;
-  font-family:inherit;transition:all .2s;
-  text-decoration:none;display:inline-block;
-}
+.nav-btn{background:var(--grad);color:#000;border:none;padding:.55rem 1.4rem;border-radius:9999px;font-size:.78rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s;text-decoration:none;display:inline-block}
 .nav-btn:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(var(--cyan-rgb),.25)}
 @media(min-width:768px){.nav-links{display:flex}}
 
-/* =====================================================
-   HERO
-   ===================================================== */
+/* HERO */
 .hero{min-height:100vh;display:flex;align-items:center;padding:7rem 0 4rem;position:relative;overflow:hidden}
 .orb{position:absolute;border-radius:50%;pointer-events:none;will-change:transform}
 .orb1{top:-10%;right:-5%;width:600px;height:600px;background:radial-gradient(circle,var(--cyan) 0%,transparent 65%);opacity:.12;animation:float 12s ease-in-out infinite}
 .orb2{bottom:-20%;left:-10%;width:500px;height:500px;background:radial-gradient(circle,var(--lime) 0%,transparent 65%);opacity:.08;animation:float 15s ease-in-out infinite reverse}
 @keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-30px)}}
-
-.hero-badge{
-  display:inline-flex;align-items:center;gap:.5rem;
-  background:rgba(var(--cyan-rgb),.08);border:1px solid var(--border2);
-  padding:.4rem 1rem;border-radius:9999px;
-  font-size:.72rem;font-weight:600;color:var(--cyan);
-  text-transform:uppercase;letter-spacing:.1em;
-  margin-bottom:1.5rem;animation:fadeUp .6s ease both;
-}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(var(--cyan-rgb),.08);border:1px solid var(--border2);padding:.4rem 1rem;border-radius:9999px;font-size:.72rem;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.1em;margin-bottom:1.5rem;animation:fadeUp .6s ease both}
 .hero-badge i{animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.hero-title{
-  font-family:'Fraunces',serif;
-  font-size:clamp(2.8rem,6.5vw,5.2rem);
-  font-weight:700;line-height:1.02;color:var(--white);
-  margin-bottom:1rem;animation:fadeUp .6s ease .1s both;letter-spacing:-.03em;
-}
+.hero-title{font-family:'Fraunces',serif;font-size:clamp(2.8rem,6.5vw,5.2rem);font-weight:700;line-height:1.02;color:var(--white);margin-bottom:1rem;animation:fadeUp .6s ease .1s both;letter-spacing:-.03em}
 .hero-title em{font-style:italic;font-weight:300;background:var(--grad2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero-sub{font-size:1.05rem;color:var(--text);max-width:520px;margin-bottom:2rem;line-height:1.7;animation:fadeUp .6s ease .2s both}
 .hero-sub strong{color:var(--white);font-weight:500}
@@ -207,13 +82,7 @@ nav{
 .btn-ghost:hover{background:rgba(var(--cyan-rgb),.06);border-color:var(--cyan)}
 .btn-wa{background:#25d366;color:#fff}
 .btn-wa:hover{background:#1fb855;transform:translateY(-1px)}
-
-/* CV preview mock */
-.cv-preview-card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:20px;padding:1.5rem;max-width:420px;
-  position:relative;overflow:hidden;animation:fadeUp .6s ease .4s both;
-}
+.cv-preview-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:1.5rem;max-width:420px;position:relative;overflow:hidden;animation:fadeUp .6s ease .4s both}
 .cv-preview-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad)}
 .cv-header-mock{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
 .cv-avatar{width:48px;height:48px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;color:#000;flex-shrink:0}
@@ -230,27 +99,21 @@ nav{
 .typing-dot:nth-child(2){animation-delay:.2s}.typing-dot:nth-child(3){animation-delay:.4s}
 @keyframes blink{0%,100%{opacity:.2}50%{opacity:1}}
 
-/* =====================================================
-   STATS
-   ===================================================== */
+/* STATS */
 .stats{padding:3rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;text-align:center}
 @media(min-width:640px){.stats-grid{grid-template-columns:repeat(4,1fr)}}
 .stat-num{font-family:'Fraunces',serif;font-size:2.4rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
 .stat-label{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:.3rem}
 
-/* =====================================================
-   SECTIONS COMUNES
-   ===================================================== */
+/* SECTIONS */
 .section{padding:5rem 0}
 .section-label{font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);margin-bottom:.6rem}
 .section-title{font-family:'Fraunces',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;color:var(--white);margin-bottom:1rem;letter-spacing:-.02em;line-height:1.1}
 .section-title em{font-style:italic;font-weight:300}
 .section-sub{color:var(--text);font-size:.95rem;max-width:500px;line-height:1.7;margin-bottom:3rem}
 
-/* =====================================================
-   STEPS
-   ===================================================== */
+/* STEPS */
 .steps{display:grid;grid-template-columns:1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:20px;overflow:hidden}
 @media(min-width:640px){.steps{grid-template-columns:repeat(4,1fr)}}
 .step{background:var(--bg);padding:2rem 1.5rem;transition:background .3s}
@@ -260,9 +123,7 @@ nav{
 .step h3{font-size:.95rem;font-weight:600;color:var(--white);margin-bottom:.4rem}
 .step p{font-size:.82rem;color:var(--muted);line-height:1.6}
 
-/* =====================================================
-   PRODUCTS / PRECIOS
-   ===================================================== */
+/* PRODUCTS */
 .products{padding:5rem 0;background:var(--bg2)}
 .products-grid{display:grid;grid-template-columns:1fr;gap:1.2rem;margin-top:3rem}
 @media(min-width:640px){.products-grid{grid-template-columns:repeat(2,1fr)}}
@@ -272,7 +133,7 @@ nav{
 .product-card.basic:hover{border-color:var(--border2);box-shadow:0 12px 40px rgba(var(--cyan-rgb),.08)}
 .product-card.pro{background:linear-gradient(135deg,rgba(var(--cyan-rgb),.08),rgba(var(--lime-rgb),.05));border:1px solid var(--border2)}
 .product-card.pro:hover{box-shadow:0 12px 48px rgba(var(--cyan-rgb),.15)}
-.product-card.pro::after{content:'MÁS POPULAR';position:absolute;top:1rem;right:1rem;font-size:.6rem;font-weight:700;letter-spacing:.12em;background:var(--grad);color:#000;padding:.2rem .7rem;border-radius:9999px}
+.product-card.pro::after{content:'MAS POPULAR';position:absolute;top:1rem;right:1rem;font-size:.6rem;font-weight:700;letter-spacing:.12em;background:var(--grad);color:#000;padding:.2rem .7rem;border-radius:9999px}
 .product-price{font-family:'Fraunces',serif;font-size:2.4rem;font-weight:700;color:var(--white);line-height:1;margin-bottom:.2rem}
 .product-price span{font-size:.9rem;font-weight:400;color:var(--muted);font-family:'DM Sans',sans-serif}
 .product-name{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--cyan);margin-bottom:1rem}
@@ -286,100 +147,55 @@ nav{
 .product-btn.outline{background:transparent;color:var(--white);border:1px solid var(--border2)}
 .product-btn.outline:hover{background:rgba(var(--cyan-rgb),.06)}
 
-/* =====================================================
-   FORM / GENERADOR
-   ===================================================== */
+/* FORM */
 .form-section{padding:5rem 0}
 .form-wrapper{background:var(--surface2);border:1px solid var(--border);border-radius:24px;overflow:hidden;max-width:700px;margin:0 auto}
 .form-header{padding:2rem 2rem 1.5rem;border-bottom:1px solid var(--border);background:rgba(var(--cyan-rgb),.02)}
 .form-header h2{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:700;color:var(--white);margin-bottom:.3rem}
 .form-header p{font-size:.85rem;color:var(--muted)}
 .form-body{padding:2rem}
-
-/* Steps dots */
 .sdots{display:flex;gap:.5rem;margin-bottom:2rem}
 .sdot{flex:1;height:3px;border-radius:2px;background:var(--border);transition:background .3s}
 .sdot.done{background:var(--grad)}.sdot.active{background:var(--cyan)}
-
-/* Form steps visibility */
-.form-step{display:none}
-.form-step.active{display:block}
-
-/* Fields */
+.form-step{display:none}.form-step.active{display:block}
 .field{margin-bottom:1.2rem;position:relative}
 .field label{display:block;font-size:.75rem;font-weight:600;color:var(--text);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem}
-.field input,.field textarea,.field select{
-  width:100%;background:var(--surface);border:1px solid var(--border);
-  border-radius:10px;padding:.75rem 1rem;color:var(--white);
-  font-family:inherit;font-size:.88rem;
-  transition:border .2s,background .2s,box-shadow .2s;outline:none;
-}
-.field input:focus,.field textarea:focus,.field select:focus{
-  border-color:var(--cyan);background:rgba(var(--cyan-rgb),.04);
-  box-shadow:0 0 0 3px rgba(var(--cyan-rgb),.08);
-}
-.field input.error,.field textarea.error,.field select.error{border-color:#ff4d6d !important;box-shadow:0 0 0 3px rgba(255,77,109,.1)}
+.field input,.field textarea,.field select{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.75rem 1rem;color:var(--white);font-family:inherit;font-size:.88rem;transition:border .2s,background .2s,box-shadow .2s;outline:none}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--cyan);background:rgba(var(--cyan-rgb),.04);box-shadow:0 0 0 3px rgba(var(--cyan-rgb),.08)}
+.field input.error,.field textarea.error,.field select.error{border-color:#ff4d6d !important}
 .field input::placeholder,.field textarea::placeholder{color:var(--muted)}
 .field textarea{resize:vertical;min-height:90px}
 .field select option{background:#0d1117;color:#f0f4ff}
-/* Para tema claro */
-html.theme-light .field select option{background:#ffffff;color:#0f1623}
-
-/* Error message inline */
-.field-error{display:none;font-size:.72rem;color:#ff4d6d;margin-top:.3rem;padding-left:.2rem}
+html.theme-light .field select option{background:#fff;color:#0f1623}
+html.theme-light .field input,html.theme-light .field textarea,html.theme-light .field select{color:var(--white)}
+.field-error{display:none;font-size:.72rem;color:#ff4d6d;margin-top:.3rem}
 .field-error.show{display:block}
-
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 @media(max-width:500px){.field-row{grid-template-columns:1fr}}
-
-/* Photo toggle */
 .photo-toggle{display:flex;gap:.6rem;margin-bottom:1rem}
-.toggle-btn{
-  flex:1;padding:.7rem;border-radius:10px;border:1px solid var(--border);
-  background:var(--surface);color:var(--muted);font-family:inherit;
-  font-size:.82rem;cursor:pointer;transition:all .2s;
-  display:flex;align-items:center;justify-content:center;gap:.4rem;
-}
+.toggle-btn{flex:1;padding:.7rem;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-family:inherit;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.4rem}
 .toggle-btn.active{border-color:var(--cyan);background:rgba(var(--cyan-rgb),.08);color:var(--cyan)}
-.photo-upload-area{
-  border:2px dashed var(--border);border-radius:12px;padding:1.5rem;
-  text-align:center;cursor:pointer;transition:all .3s;position:relative;display:none;
-}
+.photo-upload-area{border:2px dashed var(--border);border-radius:12px;padding:1.5rem;text-align:center;cursor:pointer;transition:all .3s;position:relative;display:none}
 .photo-upload-area.show{display:block}
 .photo-upload-area:hover{border-color:var(--cyan);background:rgba(var(--cyan-rgb),.04)}
 .photo-upload-area i{font-size:1.3rem;color:var(--cyan);display:block;margin-bottom:.4rem}
 .photo-upload-area p{font-size:.78rem;color:var(--muted)}
 .photo-upload-area input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%}
 #photoPreview{width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--cyan);display:none;margin:0 auto .5rem}
-
-/* =====================================================
-   SELECTOR DE FORMATO
-   ===================================================== */
-.format-selector{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
-.format-btn{
-  background:var(--surface);border:1px solid var(--border);color:var(--text);
-  padding:.5rem 1rem;border-radius:30px;font-size:.75rem;font-weight:600;
-  cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.05em;
-  font-family:inherit;
-}
+.follow-note{font-size:.72rem;color:var(--muted);margin-top:.3rem;display:flex;align-items:center;gap:.3rem}
+.follow-note i{color:var(--cyan);font-size:.65rem}
+.format-selector{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+.format-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:.5rem 1rem;border-radius:30px;font-size:.75rem;font-weight:600;cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.05em;font-family:inherit}
 .format-btn.active{background:var(--grad);color:#000;border-color:transparent}
 .format-btn:hover:not(.active){border-color:var(--cyan);color:var(--white)}
-
-/* =====================================================
-   FORM NAV BUTTONS
-   ===================================================== */
 .form-nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border)}
 .btn-back{background:transparent;border:1px solid var(--border);color:var(--muted);padding:.65rem 1.5rem;border-radius:9999px;font-family:inherit;font-size:.82rem;cursor:pointer;transition:all .2s}
 .btn-back:hover{border-color:var(--text);color:var(--text)}
 .btn-next{background:var(--grad);color:#000;border:none;padding:.65rem 1.8rem;border-radius:9999px;font-family:inherit;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s}
 .btn-next:hover{box-shadow:0 4px 16px rgba(var(--cyan-rgb),.3);transform:translateY(-1px)}
-.btn-next:disabled{opacity:.5;cursor:not-allowed;transform:none}
 
-/* =====================================================
-   IA GENERANDO
-   ===================================================== */
+/* AI LOADING */
 .ai-generating{text-align:center;padding:3rem 2rem;display:none}
-.ai-generating.show{display:block}
 .ai-spinner{width:60px;height:60px;border-radius:50%;border:2px solid var(--border);border-top-color:var(--cyan);animation:spin 1s linear infinite;margin:0 auto 1.5rem}
 @keyframes spin{to{transform:rotate(360deg)}}
 .ai-text{font-family:'Fraunces',serif;font-size:1.2rem;color:var(--white);margin-bottom:.5rem}
@@ -388,85 +204,33 @@ html.theme-light .field select option{background:#ffffff;color:#0f1623}
 .ai-step-item{font-size:.78rem;color:var(--muted);display:flex;align-items:center;gap:.5rem;justify-content:center;transition:color .3s}
 .ai-step-item.done{color:var(--lime)}
 
-/* =====================================================
-   CV RESULT — TABS DE FORMATOS
-   ===================================================== */
+/* RESULT */
 .cv-result{display:none;padding:1.5rem}
 .cv-result.show{display:block}
 .cv-result-header{text-align:center;margin-bottom:1.5rem}
 .cv-result-header h3{font-family:'Fraunces',serif;font-size:1.4rem;color:var(--white);margin-bottom:.3rem}
 .cv-result-header p{font-size:.82rem;color:var(--muted)}
-
-/* Tabs de formatos generados */
 .format-tabs{display:flex;gap:.4rem;margin-bottom:1rem;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:.8rem}
-.format-tab{
-  padding:.4rem .9rem;border-radius:8px 8px 0 0;font-size:.75rem;font-weight:600;
-  cursor:pointer;transition:all .2s;border:1px solid var(--border);border-bottom:none;
-  background:var(--surface);color:var(--muted);font-family:inherit;
-}
+.format-tab{padding:.4rem .9rem;border-radius:8px 8px 0 0;font-size:.75rem;font-weight:600;cursor:pointer;transition:all .2s;border:1px solid var(--border);border-bottom:none;background:var(--surface);color:var(--muted);font-family:inherit}
 .format-tab.active{background:var(--grad);color:#000;border-color:transparent}
 .format-tab:hover:not(.active){color:var(--white)}
-
-/* Panel de cada formato */
-.format-panel{display:none}
-.format-panel.active{display:block}
-
-/* CV Output con marca de agua */
-.cv-output{
-  background:rgba(255,255,255,.02);border:1px solid var(--border);
-  border-radius:12px;padding:1.5rem;font-size:.82rem;color:var(--text);
-  line-height:1.8;max-height:320px;overflow-y:auto;margin-bottom:1rem;
-  white-space:pre-wrap;position:relative;
-}
+.format-panel{display:none}.format-panel.active{display:block}
+.cv-output{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:12px;padding:1.5rem;font-size:.82rem;color:var(--text);line-height:1.8;max-height:320px;overflow-y:auto;margin-bottom:1rem;white-space:pre-wrap;position:relative}
 html.theme-light .cv-output{background:rgba(0,0,0,.02)}
-
-.watermark{
-  position:sticky;top:50%;left:0;width:100%;
-  display:flex;align-items:center;justify-content:center;
-  pointer-events:none;z-index:10;margin:-2rem 0;
-}
-.watermark span{
-  transform:rotate(-30deg);font-size:1.6rem;font-weight:700;
-  color:rgba(var(--cyan-rgb),.18);text-transform:uppercase;white-space:nowrap;
-  border:2px solid rgba(var(--cyan-rgb),.2);padding:.4rem 1.5rem;
-  border-radius:50px;letter-spacing:.5rem;
-}
-
-/* Spinner inline para cada tab */
-.tab-spinner{
-  display:flex;align-items:center;justify-content:center;gap:.6rem;
-  padding:2rem;font-size:.82rem;color:var(--muted);
-}
-.tab-spinner-icon{
-  width:20px;height:20px;border-radius:50%;
-  border:2px solid var(--border);border-top-color:var(--cyan);
-  animation:spin 1s linear infinite;flex-shrink:0;
-}
-
+.watermark{position:sticky;top:40%;left:0;width:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:10;margin:-2rem 0}
+.watermark span{transform:rotate(-30deg);font-size:1.6rem;font-weight:700;color:rgba(var(--cyan-rgb),.18);text-transform:uppercase;white-space:nowrap;border:2px solid rgba(var(--cyan-rgb),.2);padding:.4rem 1.5rem;border-radius:50px;letter-spacing:.4rem;display:inline-block}
 .result-actions{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center;margin-top:1rem}
 
-/* =====================================================
-   HISTORIAL LOCAL
-   ===================================================== */
+/* HISTORY */
 .history-section{margin-top:1.5rem;padding:1rem;background:var(--surface);border-radius:12px;border:1px solid var(--border)}
 .history-title{font-size:.85rem;font-weight:600;color:var(--white);margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem}
 .history-list{display:flex;flex-direction:column;gap:.4rem;max-height:160px;overflow-y:auto}
-.history-item{
-  background:var(--bg2);padding:.5rem .8rem;border-radius:8px;
-  display:flex;justify-content:space-between;align-items:center;gap:.5rem;
-  font-size:.75rem;color:var(--muted);
-}
+.history-item{background:var(--bg2);padding:.5rem .8rem;border-radius:8px;display:flex;justify-content:space-between;align-items:center;gap:.5rem;font-size:.75rem;color:var(--muted)}
 .history-item span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
-.history-item button{
-  background:transparent;border:1px solid var(--border2);color:var(--cyan);
-  padding:.2rem .6rem;border-radius:4px;font-size:.65rem;cursor:pointer;
-  font-family:inherit;white-space:nowrap;transition:background .2s;
-}
+.history-item button{background:transparent;border:1px solid var(--border2);color:var(--cyan);padding:.2rem .6rem;border-radius:4px;font-size:.65rem;cursor:pointer;font-family:inherit;transition:background .2s}
 .history-item button:hover{background:rgba(var(--cyan-rgb),.1)}
 
-/* =====================================================
-   PAGO
-   ===================================================== */
+/* PAYMENT */
 .payment-step{display:none;padding:1.5rem}
 .payment-step.show{display:block}
 .payment-header{text-align:center;margin-bottom:1.5rem}
@@ -491,9 +255,7 @@ html.theme-light .cv-output{background:rgba(0,0,0,.02)}
 .btn-confirm{width:100%;padding:1rem;border-radius:9999px;background:#25d366;color:#fff;border:none;font-family:inherit;font-size:.9rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.6rem;transition:all .2s}
 .btn-confirm:hover{background:#1fb855;transform:translateY(-1px);box-shadow:0 6px 24px rgba(37,211,102,.3)}
 
-/* =====================================================
-   WAITING
-   ===================================================== */
+/* WAITING */
 .waiting{display:none;text-align:center;padding:2.5rem 1.5rem}
 .waiting.show{display:block}
 .wait-icon{font-size:3rem;margin-bottom:1rem;display:block}
@@ -502,23 +264,12 @@ html.theme-light .cv-output{background:rgba(0,0,0,.02)}
 .wait-steps{list-style:none;display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.5rem}
 .wait-step{font-size:.8rem;color:var(--text);display:flex;align-items:center;gap:.5rem;justify-content:center}
 
-/* =====================================================
-   TOAST NOTIFICATION
-   ===================================================== */
-.toast{
-  position:fixed;bottom:100px;right:20px;z-index:9999;
-  background:var(--bg2);border:1px solid var(--border2);border-radius:12px;
-  padding:.8rem 1.2rem;font-size:.82rem;color:var(--white);
-  box-shadow:0 8px 32px rgba(0,0,0,.3);
-  transform:translateY(20px);opacity:0;transition:all .3s;pointer-events:none;
-  display:flex;align-items:center;gap:.5rem;max-width:280px;
-}
-.toast.show{transform:translateY(0);opacity:1}
-.toast i{color:var(--lime);flex-shrink:0}
+/* TOAST */
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);z-index:9999;background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:.8rem 1.4rem;font-size:.82rem;color:var(--white);box-shadow:0 8px 32px rgba(0,0,0,.3);opacity:0;transition:all .3s;pointer-events:none;display:flex;align-items:center;gap:.5rem;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast i{color:var(--lime)}
 
-/* =====================================================
-   EJEMPLOS
-   ===================================================== */
+/* EXAMPLES */
 .examples{padding:5rem 0;background:var(--bg2)}
 .examples-grid{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:2.5rem}
 @media(min-width:640px){.examples-grid{grid-template-columns:repeat(3,1fr)}}
@@ -529,9 +280,7 @@ html.theme-light .cv-output{background:rgba(0,0,0,.02)}
 .example-desc{font-size:.78rem;color:var(--muted);line-height:1.5}
 .example-tag{display:inline-block;margin-top:.8rem;font-size:.65rem;font-weight:600;padding:.2rem .6rem;border-radius:9999px;background:rgba(var(--lime-rgb),.08);border:1px solid rgba(var(--lime-rgb),.2);color:var(--lime)}
 
-/* =====================================================
-   FAQ
-   ===================================================== */
+/* FAQ */
 .faq{padding:5rem 0}
 .faq-list{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:.6rem}
 .faq-item{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border .2s}
@@ -543,18 +292,14 @@ html.theme-light .cv-output{background:rgba(0,0,0,.02)}
 .faq-item.open .faq-a{max-height:200px;padding:0 1.3rem 1.1rem}
 .faq-a p{font-size:.82rem;color:var(--muted);line-height:1.7}
 
-/* =====================================================
-   CTA FINAL
-   ===================================================== */
+/* CTA FINAL */
 .cta-final{padding:6rem 0;text-align:center;position:relative;overflow:hidden}
 .cta-final::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(var(--cyan-rgb),.05) 0%,transparent 65%);pointer-events:none}
 .cta-final h2{font-family:'Fraunces',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;color:var(--white);margin-bottom:1rem;letter-spacing:-.02em}
 .cta-final h2 em{font-style:italic;font-weight:300;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .cta-final p{color:var(--text);font-size:.95rem;max-width:420px;margin:0 auto 2rem;line-height:1.7}
 
-/* =====================================================
-   FOOTER
-   ===================================================== */
+/* FOOTER */
 footer{border-top:1px solid var(--border);padding:2rem 0}
 .footer-inner{display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center}
 @media(min-width:640px){.footer-inner{flex-direction:row;justify-content:space-between;text-align:left}}
@@ -565,68 +310,45 @@ footer{border-top:1px solid var(--border);padding:2rem 0}
 .footer-links a:hover{color:var(--white)}
 .footer-copy{font-size:.72rem;color:var(--muted)}
 
-/* =====================================================
-   WA FLOAT BUTTON
-   ===================================================== */
+/* WA FLOAT */
 .wa-float{position:fixed;bottom:1.5rem;right:1.5rem;z-index:998;width:54px;height:54px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.4rem;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:all .3s}
 .wa-float:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(37,211,102,.5)}
-.wa-tooltip{position:absolute;right:62px;background:#1a1a1a;color:#fff;padding:.3rem .8rem;border-radius:8px;font-size:.72rem;font-weight:600;white-space:nowrap;opacity:0;transition:opacity .2s;pointer-events:none;font-family:'DM Sans',sans-serif}
+.wa-tooltip{position:absolute;right:62px;background:#1a1a1a;color:#fff;padding:.3rem .8rem;border-radius:8px;font-size:.72rem;font-weight:600;white-space:nowrap;opacity:0;transition:opacity .2s;pointer-events:none}
 .wa-float:hover .wa-tooltip{opacity:1}
 
-/* =====================================================
-   ANIMATIONS
-   ===================================================== */
+/* ANIMATIONS */
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .fade-in{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
 .fade-in.visible{opacity:1;transform:translateY(0)}
-
-/* =====================================================
-   CAMPO WHATSAPP FOLLOW-UP
-   ===================================================== */
-.follow-up-note{
-  font-size:.72rem;color:var(--muted);margin-top:.3rem;
-  display:flex;align-items:center;gap:.3rem;
-}
-.follow-up-note i{color:var(--cyan);font-size:.65rem}
 </style>
 </head>
 <body>
 
-<!-- ===================================================
-     THEME SWITCHER
-     =================================================== -->
-<div class="theme-switcher" id="themeSwitcher">
-  <button class="theme-btn" id="btnDark" title="Modo oscuro" aria-label="Modo oscuro">
-    <i class="fas fa-moon"></i>
-  </button>
-  <button class="theme-btn" id="btnLight" title="Modo claro" aria-label="Modo claro">
-    <i class="fas fa-sun"></i>
-  </button>
-  <div class="sep"></div>
-  <button class="accent-btn" data-accent="cyan" title="Cian/Lima" aria-label="Acento cian"></button>
-  <button class="accent-btn" data-accent="purple" title="Violeta/Dorado" aria-label="Acento violeta"></button>
-  <button class="accent-btn" data-accent="blue" title="Azul/Plateado" aria-label="Acento azul"></button>
-  <button class="accent-btn" data-accent="warm" title="Rosa/Dorado" aria-label="Acento cálido"></button>
+<div class="theme-switcher">
+  <button class="theme-btn" id="btnDark" title="Modo oscuro"><i class="fas fa-moon"></i></button>
+  <button class="theme-btn" id="btnLight" title="Modo claro"><i class="fas fa-sun"></i></button>
+  <div class="tsep"></div>
+  <button class="accent-btn" data-accent="cyan" title="Cian"></button>
+  <button class="accent-btn" data-accent="purple" title="Violeta"></button>
+  <button class="accent-btn" data-accent="blue" title="Azul"></button>
+  <button class="accent-btn" data-accent="warm" title="Rosa"></button>
 </div>
 
-<!-- TOAST -->
 <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg"></span></div>
 
-<!-- NAV -->
 <nav>
   <div class="container nav-inner">
     <a href="#" class="logo">CV<span>itae</span></a>
     <ul class="nav-links">
-      <li><a href="#como-funciona">Cómo funciona</a></li>
+      <li><a href="#como-funciona">Como funciona</a></li>
       <li><a href="#precios">Precios</a></li>
       <li><a href="#ejemplos">Ejemplos</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
-    <a href="#generar" class="nav-btn">Crear mi CV →</a>
+    <a href="#generar" class="nav-btn">Crear mi CV</a>
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="orb orb1"></div>
   <div class="orb orb2"></div>
@@ -660,19 +382,17 @@ footer{border-top:1px solid var(--border);padding:2rem 0}
   </div>
 </section>
 
-<!-- STATS -->
 <div class="stats">
   <div class="container">
     <div class="stats-grid">
-      <div class="fade-in"><div class="stat-num">3 min</div><div class="stat-label">Tiempo promedio</div></div>
-      <div class="fade-in"><div class="stat-num">100%</div><div class="stat-label">Personalizado</div></div>
-      <div class="fade-in"><div class="stat-num">₲50k</div><div class="stat-label">Desde</div></div>
-      <div class="fade-in"><div class="stat-num">48hs</div><div class="stat-label">Portafolio web</div></div>
+      <div><div class="stat-num">3 min</div><div class="stat-label">Tiempo promedio</div></div>
+      <div><div class="stat-num">100%</div><div class="stat-label">Personalizado</div></div>
+      <div><div class="stat-num">&#8370;50k</div><div class="stat-label">Desde</div></div>
+      <div><div class="stat-num">48hs</div><div class="stat-label">Portafolio web</div></div>
     </div>
   </div>
 </div>
 
-<!-- CÓMO FUNCIONA -->
 <section class="section" id="como-funciona">
   <div class="container">
     <div class="section-label">El proceso</div>
@@ -707,16 +427,15 @@ footer{border-top:1px solid var(--border);padding:2rem 0}
   </div>
 </section>
 
-<!-- PRECIOS -->
 <section class="products" id="precios">
   <div class="container">
     <div class="section-label">Planes</div>
     <h2 class="section-title fade-in">Simple y <em>sin sorpresas.</em></h2>
     <p class="section-sub fade-in">Pago único. Sin suscripciones. Sin letra chica.</p>
     <div class="products-grid">
-      <div class="product-card basic fade-in" onclick="scrollToForm()">
+      <div class="product-card basic fade-in" onclick="document.getElementById('generar').scrollIntoView({behavior:'smooth'})">
         <div class="product-name">CV Digital</div>
-        <div class="product-price">₲50.000 <span>pago único</span></div>
+        <div class="product-price">&#8370;50.000 <span>pago único</span></div>
         <p class="product-desc">CV en PDF profesional, adaptado al trabajo que buscás. Listo para enviar en minutos.</p>
         <ul class="product-features">
           <li><i class="fas fa-check"></i> CV en PDF profesional</li>
@@ -727,9 +446,9 @@ footer{border-top:1px solid var(--border);padding:2rem 0}
         </ul>
         <button class="product-btn outline">Empezar ahora</button>
       </div>
-      <div class="product-card pro fade-in" onclick="scrollToForm()">
+      <div class="product-card pro fade-in" onclick="document.getElementById('generar').scrollIntoView({behavior:'smooth'})">
         <div class="product-name">Portafolio Web</div>
-        <div class="product-price">₲120.000 <span>pago único</span></div>
+        <div class="product-price">&#8370;120.000 <span>pago único</span></div>
         <p class="product-desc">Tu perfil profesional online con link propio, CV descargable y certificados verificables.</p>
         <ul class="product-features">
           <li><i class="fas fa-check"></i> Todo del plan CV</li>
@@ -743,21 +462,17 @@ footer{border-top:1px solid var(--border);padding:2rem 0}
       </div>
     </div>
     <p style="text-align:center;margin-top:1.5rem;font-size:.82rem;color:var(--muted)">
-      ¿Necesitás algo más personalizado?
-      <a href="https://wa.me/595992954169?text=Hola!%20Necesito%20algo%20personalizado" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none;font-weight:600">Escribinos por WhatsApp →</a>
+      Necesitás algo más personalizado?
+      <a href="https://wa.me/595992954169?text=Hola!%20Necesito%20algo%20personalizado" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none;font-weight:600">Escribinos por WhatsApp</a>
     </p>
   </div>
 </section>
 
-<!-- ===================================================
-     GENERADOR
-     =================================================== -->
 <section class="form-section" id="generar">
   <div class="container">
     <div class="section-label" style="text-align:center">Generador con IA</div>
     <h2 class="section-title fade-in" style="text-align:center;margin-bottom:.5rem">Probá <em>gratis</em> antes de pagar.</h2>
     <p style="text-align:center;color:var(--muted);font-size:.85rem;margin-bottom:2.5rem">Generamos la preview de tu CV sin costo. Solo pagás si te gusta.</p>
-
     <div class="form-wrapper">
       <div class="form-header">
         <h2>Crear mi CV con IA</h2>
@@ -770,44 +485,39 @@ footer{border-top:1px solid var(--border);padding:2rem 0}
           <div class="sdot" id="d3"></div>
         </div>
 
-        <!-- ============ PASO 1 ============ -->
         <div class="form-step active" id="s1">
           <div class="field-row">
             <div class="field">
-              <label for="fname">Nombre completo *</label>
-              <input type="text" id="fname" placeholder="Ej: María González" autocomplete="name">
+              <label>Nombre completo *</label>
+              <input type="text" id="fname" placeholder="Ej: María González">
               <div class="field-error" id="err-fname">Por favor ingresá tu nombre.</div>
             </div>
             <div class="field">
-              <label for="fprofession">Profesión *</label>
-              <input type="text" id="fprofession" placeholder="Ej: Contadora" autocomplete="off">
+              <label>Profesión *</label>
+              <input type="text" id="fprofession" placeholder="Ej: Contadora">
               <div class="field-error" id="err-fprofession">Por favor ingresá tu profesión.</div>
             </div>
           </div>
-
-          <!-- WhatsApp follow-up — Paso 1 -->
           <div class="field">
-            <label for="fwhatsapp">WhatsApp (opcional)</label>
-            <input type="tel" id="fwhatsapp" placeholder="Ej: +595 981 123456" autocomplete="tel">
-            <div class="follow-up-note"><i class="fas fa-lock"></i> Solo para enviarte el CV finalizado. No spam.</div>
+            <label>WhatsApp (opcional)</label>
+            <input type="tel" id="fwhatsapp" placeholder="Ej: +595 981 123456">
+            <div class="follow-note"><i class="fas fa-lock"></i> Solo para enviarte el CV. No spam.</div>
           </div>
-
           <div class="field">
-            <label>¿Foto en el CV?</label>
+            <label>Foto en el CV?</label>
             <div class="photo-toggle">
               <button class="toggle-btn active" id="btnNoFoto" onclick="togglePhoto(false)" type="button"><i class="fas fa-user-slash"></i> Sin foto</button>
               <button class="toggle-btn" id="btnConFoto" onclick="togglePhoto(true)" type="button"><i class="fas fa-camera"></i> Con foto</button>
             </div>
             <div class="photo-upload-area" id="photoArea">
-              <img id="photoPreview" src="" alt="Preview de foto">
+              <img id="photoPreview" src="" alt="preview">
               <i class="fas fa-cloud-upload-alt"></i>
               <p>Tocá para subir tu foto</p>
-              <input type="file" accept="image/*" id="photoInput" onchange="handlePhoto(event)" aria-label="Subir foto">
+              <input type="file" accept="image/*" id="photoInput" onchange="handlePhoto(event)">
             </div>
           </div>
-
           <div class="field">
-            <label for="fexp">Años de experiencia</label>
+            <label>Años de experiencia</label>
             <select id="fexp">
               <option value="">Seleccioná...</option>
               <option>Sin experiencia (recién graduado/a)</option>
@@ -818,7 +528,7 @@ footer{border-top:1px solid var(--border);padding:2rem 0}
             </select>
           </div>
           <div class="field">
-            <label for="fexperience">Experiencia relevante</label>
+            <label>Experiencia relevante</label>
             <textarea id="fexperience" placeholder="Ej: Trabajé 3 años como contadora en empresa importadora. Manejé balances, liquidación de sueldos..."></textarea>
           </div>
           <div class="form-nav">
@@ -827,61 +537,49 @@ footer{border-top:1px solid var(--border);padding:2rem 0}
           </div>
         </div>
 
-        <!-- ============ PASO 2 ============ -->
         <div class="form-step" id="s2">
           <div class="field">
-            <label for="feducation">Estudios / Formación</label>
-            <input type="text" id="feducation" placeholder="Ej: Lic. en Contabilidad — UNA 2019" autocomplete="off">
+            <label>Estudios / Formación</label>
+            <input type="text" id="feducation" placeholder="Ej: Lic. en Contabilidad — UNA 2019">
           </div>
           <div class="field">
-            <label for="fcerts">Certificados o cursos destacados</label>
+            <label>Certificados o cursos</label>
             <input type="text" id="fcerts" placeholder="Ej: Excel avanzado, SAP básico, inglés B2...">
           </div>
           <div class="field">
-            <label for="fskills">Habilidades clave</label>
+            <label>Habilidades clave</label>
             <input type="text" id="fskills" placeholder="Ej: Trabajo en equipo, liderazgo, análisis financiero...">
           </div>
           <div class="field">
-            <label for="fjob">¿A qué trabajo querés aplicar? *</label>
+            <label>A qué trabajo querés aplicar? *</label>
             <input type="text" id="fjob" placeholder="Ej: Analista contable en empresa logística de Asunción">
-            <div class="field-error" id="err-fjob">Por favor indicá el puesto al que aplicás.</div>
+            <div class="field-error" id="err-fjob">Por favor indicá el puesto.</div>
           </div>
           <div class="field">
-            <label for="fjobdesc">
-              Pegá la descripción del puesto
-              <span style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;font-size:.72rem"> (muy recomendado)</span>
-            </label>
-            <textarea id="fjobdesc" style="min-height:120px" placeholder="Copiá y pegá el aviso de trabajo completo. La IA adapta tu CV exactamente a lo que buscan. Más info = mejor resultado."></textarea>
+            <label>Descripción del puesto <span style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;font-size:.72rem">(muy recomendado)</span></label>
+            <textarea id="fjobdesc" style="min-height:110px" placeholder="Copiá y pegá el aviso de trabajo completo. La IA adapta tu CV exactamente a lo que buscan."></textarea>
           </div>
-
-          <!-- Selector de formato -->
-          <div style="margin-bottom:.5rem">
-            <label style="display:block;font-size:.75rem;font-weight:600;color:var(--text);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.6rem">
-              Formato del CV
-            </label>
+          <div>
+            <label style="display:block;font-size:.75rem;font-weight:600;color:var(--text);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.6rem">Formato del CV</label>
             <div class="format-selector" id="formatSelector">
-              <button class="format-btn active" data-format="latam" type="button">🇵🇾 Latam</button>
-              <button class="format-btn" data-format="europass" type="button">🇪🇺 Europass</button>
-              <button class="format-btn" data-format="usa" type="button">🇺🇸 USA</button>
-              <button class="format-btn" data-format="academico" type="button">🎓 Académico</button>
+              <button class="format-btn active" data-format="latam" type="button">Paraguay / Latam</button>
+              <button class="format-btn" data-format="europass" type="button">Europass</button>
+              <button class="format-btn" data-format="usa" type="button">USA Resume</button>
+              <button class="format-btn" data-format="academico" type="button">Académico</button>
             </div>
           </div>
-
-          <!-- Checkbox: generar todos los formatos -->
-          <div class="field" style="margin-bottom:1.5rem">
+          <div class="field" style="margin:1rem 0 1.5rem">
             <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;text-transform:none;letter-spacing:0;font-size:.85rem;font-weight:400;color:var(--text)">
-              <input type="checkbox" id="chkAllFormats" style="width:auto;background:none;border:none;padding:0;cursor:pointer;accent-color:var(--cyan)">
-              Generar los 4 formatos y compararlos (tarda un poco más)
+              <input type="checkbox" id="chkAllFormats" style="width:auto;background:none;border:none;padding:0;accent-color:var(--cyan)">
+              Generar los 4 formatos y compararlos
             </label>
           </div>
-
           <div class="form-nav">
             <button class="btn-back" onclick="goStep(1)" type="button"><i class="fas fa-arrow-left"></i> Atrás</button>
-            <button class="btn-next" id="btnGenerate" onclick="generateCV()" type="button"><i class="fas fa-wand-magic-sparkles"></i> Generar preview</button>
+            <button class="btn-next" onclick="generateCV()" type="button"><i class="fas fa-wand-magic-sparkles"></i> Generar preview</button>
           </div>
         </div>
 
-        <!-- ============ IA GENERANDO ============ -->
         <div class="ai-generating" id="aiGen">
           <div class="ai-spinner"></div>
           <div class="ai-text" id="aiText">La IA está armando tu CV...</div>
@@ -895,47 +593,38 @@ footer{border-top:1px solid var(--border);padding:2rem 0}
           </ul>
         </div>
 
-        <!-- ============ RESULTADO CON TABS ============ -->
         <div class="cv-result" id="cvResult">
           <div class="cv-result-header">
-            <h3>✅ Preview lista</h3>
-            <p>Así quedará tu CV. Si te gusta, elegí tu plan y pagá.</p>
+            <h3>Preview lista</h3>
+            <p>Asi quedará tu CV. Si te gusta, elegí tu plan y pagá.</p>
           </div>
-
-          <!-- Tabs de formatos -->
           <div class="format-tabs" id="formatTabs"></div>
-
-          <!-- Panels de formatos -->
           <div id="formatPanels"></div>
-
           <div class="result-actions">
             <button class="btn btn-primary" onclick="showPayment()" type="button"><i class="fas fa-download"></i> Quiero mi CV en PDF</button>
             <button class="btn btn-ghost" onclick="goStep(1)" type="button"><i class="fas fa-redo"></i> Modificar</button>
             <button class="btn btn-wa" onclick="shareWhatsApp()" type="button"><i class="fab fa-whatsapp"></i> Compartir</button>
           </div>
-
-          <!-- Historial -->
           <div class="history-section">
-            <div class="history-title"><i class="fas fa-history"></i> Últimas previews generadas</div>
+            <div class="history-title"><i class="fas fa-history"></i> Últimas previews</div>
             <div class="history-list" id="historyList"></div>
           </div>
         </div>
 
-        <!-- ============ PAGO ============ -->
         <div class="payment-step" id="payStep">
           <div class="payment-header">
-            <h3>💳 Elegí tu plan y pagá</h3>
+            <h3>Elegí tu plan y pagá</h3>
             <p>Transferís, mandás el comprobante por WhatsApp y te enviamos el CV.</p>
           </div>
           <div class="plan-selector">
             <div class="plan-option selected" id="planBasic" onclick="selectPlan('basic')">
               <div class="plan-label">CV Digital</div>
-              <div class="plan-price">₲50.000</div>
+              <div class="plan-price">&#8370;50.000</div>
               <div class="plan-desc">PDF listo para enviar</div>
             </div>
             <div class="plan-option" id="planPro" onclick="selectPlan('pro')">
               <div class="plan-label">Portafolio Web</div>
-              <div class="plan-price">₲120.000</div>
+              <div class="plan-price">&#8370;120.000</div>
               <div class="plan-desc">Link online + PDF</div>
             </div>
           </div>
@@ -943,28 +632,27 @@ footer{border-top:1px solid var(--border);padding:2rem 0}
             <div class="pay-method">
               <div class="pay-method-title"><i class="fas fa-building-columns"></i> Transferencia bancaria</div>
               <div class="pay-detail">0992954169 <small>· Isaías Solaeche</small></div>
-              <div class="pay-detail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a9c0dac8dac6c5c8cccac1cce9cec4c8c0c587cac6c4">[email&#160;protected]</a> <small>· Isaías Solaeche</small></div>
-              <button class="pay-copy" onclick="copyText('0992954169', 'Alias copiado')" type="button">Copiar alias</button>
+              <div class="pay-detail">isasolaeche@gmail.com <small>· Isaías Solaeche</small></div>
+              <button class="pay-copy" onclick="copyText('0992954169','Alias copiado')" type="button">Copiar alias</button>
             </div>
             <div class="pay-method">
-              <div class="pay-method-title"><i class="fab fa-paypal"></i> PayPal (pagos internacionales)</div>
-              <div class="pay-detail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b7dec4d6c4d8dbd6d2d4dfd2f7dfd8c3dad6dedb99d4d8da">[email&#160;protected]</a></div>
-              <button class="pay-copy" onclick="copyText('isasolaeche@hotmail.com', 'Email copiado')" type="button">Copiar email PayPal</button>
+              <div class="pay-method-title"><i class="fab fa-paypal"></i> PayPal (internacional)</div>
+              <div class="pay-detail">isasolaeche@hotmail.com</div>
+              <button class="pay-copy" onclick="copyText('isasolaeche@hotmail.com','Email copiado')" type="button">Copiar email PayPal</button>
             </div>
           </div>
           <div class="payment-note">
-            <strong>¿Cómo funciona?</strong> Realizás la transferencia por el monto del plan elegido. Tomás captura del comprobante y la mandás por WhatsApp al <strong>+595 992 954 169</strong>. Confirmamos el pago y te enviamos el CV finalizado al mismo número.
+            <strong>Como funciona:</strong> Realizás la transferencia, tomás captura del comprobante y la mandás por WhatsApp al <strong>+595 992 954 169</strong>. Confirmamos y te enviamos el CV al mismo número.
           </div>
           <button class="btn-confirm" onclick="confirmPayment()" type="button">
             <i class="fab fa-whatsapp"></i> Ya pagué — Enviar comprobante por WhatsApp
           </button>
         </div>
 
-        <!-- ============ ESPERANDO ============ -->
         <div class="waiting" id="waitDiv">
           <span class="wait-icon">⏳</span>
-          <div class="wait-title">¡Comprobante enviado!</div>
-          <div class="wait-sub">En cuanto confirmemos tu pago te enviamos el CV finalizado al mismo WhatsApp. Normalmente en menos de 30 minutos.</div>
+          <div class="wait-title">Comprobante enviado!</div>
+          <div class="wait-sub">En cuanto confirmemos tu pago te enviamos el CV finalizado. Normalmente en menos de 30 minutos.</div>
           <ul class="wait-steps">
             <li class="wait-step"><i class="fas fa-check" style="color:var(--lime)"></i> Comprobante enviado</li>
             <li class="wait-step"><i class="fas fa-check" style="color:var(--lime)"></i> Revisamos tu pago</li>
@@ -973,12 +661,11 @@ footer{border-top:1px solid var(--border);padding:2rem 0}
           <a href="https://wa.me/595992954169" target="_blank" rel="noopener" class="btn btn-wa" style="justify-content:center;width:100%"><i class="fab fa-whatsapp"></i> Ir a WhatsApp</a>
         </div>
 
-      </div><!-- /form-body -->
-    </div><!-- /form-wrapper -->
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- EJEMPLOS -->
 <section class="examples" id="ejemplos">
   <div class="container">
     <div class="section-label">Ejemplos reales</div>
@@ -988,7 +675,7 @@ footer{border-top:1px solid var(--border);padding:2rem 0}
         <div class="example-profession">Cooperación Internacional</div>
         <div class="example-name">Julio Solaeche</div>
         <div class="example-desc">Gestor de proyectos con experiencia en BID, ONGs internacionales y foros globales. 6+ años.</div>
-        <div class="example-tag">Ver portafolio real →</div>
+        <div class="example-tag">Ver portafolio real</div>
       </a>
       <div class="example-card fade-in">
         <div class="example-profession">Abogada Corporativa</div>
@@ -1006,250 +693,186 @@ footer{border-top:1px solid var(--border);padding:2rem 0}
   </div>
 </section>
 
-<!-- FAQ -->
 <section class="faq" id="faq">
   <div class="container">
     <div class="section-label" style="text-align:center">Preguntas frecuentes</div>
     <h2 class="section-title fade-in" style="text-align:center;margin-bottom:2.5rem">Todo lo que <em>querés saber.</em></h2>
     <div class="faq-list">
       <div class="faq-item fade-in">
-        <div class="faq-q" onclick="toggleFaq(this)">¿Cómo pago? ¿Aceptan transferencia? <i class="fas fa-chevron-down"></i></div>
-        <div class="faq-a"><p>Sí, aceptamos transferencia bancaria (alias 0992954169 o <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9ff6ecfeecf0f3fefafcf7fadff8f2fef6f3b1fcf0f2">[email&#160;protected]</a>, a nombre de Isaías Solaeche) y PayPal para pagos internacionales (<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="751c0614061a191410161d10351d1a0118141c195b161a18">[email&#160;protected]</a>). Todo se coordina por WhatsApp.</p></div>
+        <div class="faq-q" onclick="toggleFaq(this)">Como pago? Aceptan transferencia? <i class="fas fa-chevron-down"></i></div>
+        <div class="faq-a"><p>Si, aceptamos transferencia bancaria (alias 0992954169 o isasolaeche@gmail.com, a nombre de Isaías Solaeche) y PayPal para pagos internacionales (isasolaeche@hotmail.com). Todo se coordina por WhatsApp.</p></div>
       </div>
       <div class="faq-item fade-in">
-        <div class="faq-q" onclick="toggleFaq(this)">¿El CV lo hace realmente una IA? <i class="fas fa-chevron-down"></i></div>
+        <div class="faq-q" onclick="toggleFaq(this)">El CV lo hace realmente una IA? <i class="fas fa-chevron-down"></i></div>
         <div class="faq-a"><p>La IA genera el contenido adaptado al puesto específico. Luego un humano revisa que todo quede perfecto antes de entregártelo. Lo mejor de los dos mundos.</p></div>
       </div>
       <div class="faq-item fade-in">
-        <div class="faq-q" onclick="toggleFaq(this)">¿Puedo elegir si quiero foto o no? <i class="fas fa-chevron-down"></i></div>
-        <div class="faq-a"><p>Absolutamente. En el formulario elegís con foto o sin foto. Ambas opciones son válidas — en muchos sectores el CV sin foto es preferido.</p></div>
+        <div class="faq-q" onclick="toggleFaq(this)">Puedo elegir si quiero foto o no? <i class="fas fa-chevron-down"></i></div>
+        <div class="faq-a"><p>Absolutamente. En el formulario elegís con foto o sin foto. Ambas opciones son válidas.</p></div>
       </div>
       <div class="faq-item fade-in">
-        <div class="faq-q" onclick="toggleFaq(this)">¿Qué pasa si no me gusta el resultado? <i class="fas fa-chevron-down"></i></div>
+        <div class="faq-q" onclick="toggleFaq(this)">Que pasa si no me gusta el resultado? <i class="fas fa-chevron-down"></i></div>
         <div class="faq-a"><p>Todos los planes incluyen 1 revisión gratuita. Si algo no te convence, lo ajustamos sin costo adicional.</p></div>
       </div>
       <div class="faq-item fade-in">
-        <div class="faq-q" onclick="toggleFaq(this)">¿Puedo aplicar a trabajos en el exterior? <i class="fas fa-chevron-down"></i></div>
+        <div class="faq-q" onclick="toggleFaq(this)">Puedo aplicar a trabajos en el exterior? <i class="fas fa-chevron-down"></i></div>
         <div class="faq-a"><p>Perfectamente. Adaptamos tu CV al formato de empresas en Argentina, Brasil, España, EEUU o cualquier otro mercado.</p></div>
-      </div>
-      <div class="faq-item fade-in">
-        <div class="faq-q" onclick="toggleFaq(this)">¿Necesito algo más personalizado? <i class="fas fa-chevron-down"></i></div>
-        <div class="faq-a"><p>Claro que sí. Podemos hacer proyectos a medida — precio según lo que necesitás. Escribinos por WhatsApp y lo coordinamos directamente.</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA FINAL -->
 <section class="cta-final">
   <div class="container">
     <h2>Tu próximo trabajo <em>empieza</em><br>con el CV correcto.</h2>
     <p>Profesionales con CV adaptado consiguen hasta 3x más respuestas. El tuyo puede estar listo hoy.</p>
     <div style="display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap">
       <a href="#generar" class="btn btn-primary" style="font-size:.95rem;padding:.9rem 2.5rem"><i class="fas fa-wand-magic-sparkles"></i> Generar mi CV gratis</a>
-      <a href="https://wa.me/595992954169?text=Hola!%20Quiero%20saber%20m%C3%A1s%20sobre%20CVitae" target="_blank" rel="noopener" class="btn btn-wa" style="font-size:.95rem;padding:.9rem 2rem"><i class="fab fa-whatsapp"></i> Consultar</a>
+      <a href="https://wa.me/595992954169?text=Hola!%20Quiero%20saber%20mas%20sobre%20CVitae" target="_blank" rel="noopener" class="btn btn-wa" style="font-size:.95rem;padding:.9rem 2rem"><i class="fab fa-whatsapp"></i> Consultar</a>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="container footer-inner">
     <div class="footer-logo">CV<span>itae</span> · Asunción, Paraguay</div>
     <ul class="footer-links">
-      <li><a href="#como-funciona">Cómo funciona</a></li>
+      <li><a href="#como-funciona">Como funciona</a></li>
       <li><a href="#precios">Precios</a></li>
       <li><a href="#ejemplos">Ejemplos</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
-    <div class="footer-copy">© 2026 CVitae · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dab3a9bba9b5b6bbbfb9b2bf9abdb7bbb3b6f4b9b5b7">[email&#160;protected]</a></div>
+    <div class="footer-copy">2026 CVitae · isasolaeche@gmail.com</div>
   </div>
 </footer>
 
-<!-- WA FLOAT -->
-<a href="https://wa.me/595992954169?text=Hola!%20Vi%20CVitae%20y%20tengo%20una%20consulta" target="_blank" rel="noopener" class="wa-float" aria-label="Contactar por WhatsApp">
+<a href="https://wa.me/595992954169?text=Hola!%20Vi%20CVitae%20y%20tengo%20una%20consulta" target="_blank" rel="noopener" class="wa-float">
   <i class="fab fa-whatsapp"></i>
-  <span class="wa-tooltip">¿Consultas? Escribinos</span>
+  <span class="wa-tooltip">Consultas? Escribinos</span>
 </a>
 
-<!-- ===================================================
-     JAVASCRIPT
-     =================================================== -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-/* =====================================================
-   ESTADO GLOBAL
-   ===================================================== */
-const STATE = {
-  cvContents: {},        // { latam: '...', europass: '...', ... }
+<script>
+var STATE = {
+  cvContents: {},
   activeFormat: 'latam',
   hasPhoto: false,
   photoData: null,
   selectedPlan: 'basic',
-  currentFormat: 'latam',
-  generateAll: false,
+  currentFormat: 'latam'
 };
 
-const FORMAT_LABELS = {
-  latam:     '🇵🇾 Latam',
-  europass:  '🇪🇺 Europass',
-  usa:       '🇺🇸 USA',
-  academico: '🎓 Académico',
+var FORMAT_LABELS = {
+  latam: 'Paraguay/Latam',
+  europass: 'Europass',
+  usa: 'USA Resume',
+  academico: 'Academico'
 };
 
-const FORMAT_INSTRUCTIONS = {
-  latam:     'Formato Latinoamérica/Paraguay: incluir datos personales completos, foto opcional mencionada si aplica, experiencia detallada, cursos y referencias. Estilo clásico profesional.',
-  europass:  'Formato Europass europeo: estructura por bloques claramente etiquetados, sin foto, énfasis en competencias digitales e idiomas, orden cronológico inverso.',
-  usa:       'Formato USA Resume: máximo una página, perfil profesional al inicio (Summary), logros cuantificables con verbos de acción, sin foto, sin datos personales como fecha de nacimiento.',
-  academico: 'Formato Académico/CV científico: publicaciones, congresos, proyectos de investigación, becas y premios, orden cronológico inverso, énfasis en producción científica.',
+var FORMAT_INSTRUCTIONS = {
+  latam: 'Formato Latinoamerica/Paraguay: datos personales completos, experiencia detallada, educacion, cursos. Estilo clasico profesional.',
+  europass: 'Formato Europass europeo: bloques etiquetados, sin foto, competencias digitales e idiomas, orden cronologico inverso.',
+  usa: 'Formato USA Resume: maximo una pagina, Summary al inicio, logros cuantificables con verbos de accion, sin foto.',
+  academico: 'Formato Academico: publicaciones, congresos, proyectos de investigacion, becas, enfasis en produccion cientifica.'
 };
 
-/* =====================================================
-   TEMA Y ACENTOS — usando clases en <html>
-   ===================================================== */
-function setTheme(theme) {
-  const html = document.documentElement;
-  if (theme === 'light') {
-    html.classList.add('theme-light');
+// TEMA
+function setTheme(t) {
+  if (t === 'light') {
+    document.documentElement.classList.add('theme-light');
   } else {
-    html.classList.remove('theme-light');
+    document.documentElement.classList.remove('theme-light');
   }
-  document.getElementById('btnDark').classList.toggle('active', theme === 'dark');
-  document.getElementById('btnLight').classList.toggle('active', theme === 'light');
-  try { localStorage.setItem('cvTheme', theme); } catch(e) {}
+  document.getElementById('btnDark').classList.toggle('active', t === 'dark');
+  document.getElementById('btnLight').classList.toggle('active', t === 'light');
+  try { localStorage.setItem('cvTheme', t); } catch(e) {}
 }
 
-function setAccent(accent) {
-  const html = document.documentElement;
-  // Remover todos los acentos anteriores
-  html.classList.remove('accent-purple', 'accent-blue', 'accent-warm');
-  // El acento "cyan" es el default, no necesita clase extra
-  if (accent !== 'cyan') {
-    html.classList.add('accent-' + accent);
-  }
-  document.querySelectorAll('.accent-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.accent === accent);
+function setAccent(a) {
+  document.documentElement.classList.remove('accent-purple','accent-blue','accent-warm');
+  if (a !== 'cyan') document.documentElement.classList.add('accent-' + a);
+  document.querySelectorAll('.accent-btn').forEach(function(b) {
+    b.classList.toggle('active', b.dataset.accent === a);
   });
-  try { localStorage.setItem('cvAccent', accent); } catch(e) {}
+  try { localStorage.setItem('cvAccent', a); } catch(e) {}
 }
 
-// Init temas al cargar
-(function initTheme() {
-  let savedTheme = 'dark';
-  let savedAccent = 'cyan';
+(function() {
+  var t = 'dark', a = 'cyan';
   try {
-    savedTheme = localStorage.getItem('cvTheme') ||
-      (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-    savedAccent = localStorage.getItem('cvAccent') || 'cyan';
+    t = localStorage.getItem('cvTheme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    a = localStorage.getItem('cvAccent') || 'cyan';
   } catch(e) {}
-  setTheme(savedTheme);
-  setAccent(savedAccent);
+  setTheme(t);
+  setAccent(a);
 })();
 
-document.getElementById('btnDark').addEventListener('click', () => setTheme('dark'));
-document.getElementById('btnLight').addEventListener('click', () => setTheme('light'));
-document.querySelectorAll('.accent-btn').forEach(btn => {
-  btn.addEventListener('click', () => setAccent(btn.dataset.accent));
+document.getElementById('btnDark').addEventListener('click', function() { setTheme('dark'); });
+document.getElementById('btnLight').addEventListener('click', function() { setTheme('light'); });
+document.querySelectorAll('.accent-btn').forEach(function(b) {
+  b.addEventListener('click', function() { setAccent(b.dataset.accent); });
 });
 
-/* =====================================================
-   SELECTOR DE FORMATO ÚNICO
-   ===================================================== */
-document.querySelectorAll('#formatSelector .format-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('#formatSelector .format-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    STATE.currentFormat = btn.dataset.format;
+// FORMAT SELECTOR
+document.querySelectorAll('#formatSelector .format-btn').forEach(function(b) {
+  b.addEventListener('click', function() {
+    document.querySelectorAll('#formatSelector .format-btn').forEach(function(x) { x.classList.remove('active'); });
+    b.classList.add('active');
+    STATE.currentFormat = b.dataset.format;
   });
 });
 
-/* =====================================================
-   SCROLL HELPERS
-   ===================================================== */
-function scrollToForm() {
-  const el = document.getElementById('generar');
-  if (el) window.scrollTo({ top: el.offsetTop - 60, behavior: 'smooth' });
-}
-
-/* =====================================================
-   TOAST (reemplaza alert nativo)
-   ===================================================== */
-let toastTimer;
-function showToast(msg, duration = 3000) {
-  const toast = document.getElementById('toast');
+// TOAST
+var toastTimer;
+function showToast(msg, dur) {
+  dur = dur || 3000;
+  var t = document.getElementById('toast');
   document.getElementById('toastMsg').textContent = msg;
-  toast.classList.add('show');
+  t.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove('show'), duration);
+  toastTimer = setTimeout(function() { t.classList.remove('show'); }, dur);
 }
 
-/* =====================================================
-   VALIDACIÓN INLINE
-   ===================================================== */
-function setFieldError(fieldId, errId, show) {
-  const input = document.getElementById(fieldId);
-  const err   = document.getElementById(errId);
-  if (!input || !err) return;
-  input.classList.toggle('error', show);
-  err.classList.toggle('show', show);
+// VALIDACION
+function setFieldError(fid, eid, show) {
+  var f = document.getElementById(fid);
+  var e = document.getElementById(eid);
+  if (f) f.classList.toggle('error', show);
+  if (e) e.classList.toggle('show', show);
 }
-
 function clearErrors() {
-  document.querySelectorAll('.field-error').forEach(e => e.classList.remove('show'));
-  document.querySelectorAll('.error').forEach(e => e.classList.remove('error'));
+  document.querySelectorAll('.field-error').forEach(function(e) { e.classList.remove('show'); });
+  document.querySelectorAll('.error').forEach(function(e) { e.classList.remove('error'); });
 }
 
-/* =====================================================
-   NAVEGACIÓN DE PASOS
-   ===================================================== */
+// PASOS
 function goStep(n) {
   clearErrors();
-  // Validar paso 1 antes de avanzar a 2
   if (n === 2) {
-    let valid = true;
-    if (!document.getElementById('fname').value.trim()) {
-      setFieldError('fname', 'err-fname', true); valid = false;
-    }
-    if (!document.getElementById('fprofession').value.trim()) {
-      setFieldError('fprofession', 'err-fprofession', true); valid = false;
-    }
-    if (!valid) return;
+    var ok = true;
+    if (!document.getElementById('fname').value.trim()) { setFieldError('fname','err-fname',true); ok=false; }
+    if (!document.getElementById('fprofession').value.trim()) { setFieldError('fprofession','err-fprofession',true); ok=false; }
+    if (!ok) return;
   }
-
-  // Ocultar todo
-  ['s1','s2'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.classList.remove('active');
-  });
-  hideAllResults();
-
-  // Mostrar paso correcto
-  if (n <= 2) {
-    const step = document.getElementById('s' + n);
-    if (step) step.classList.add('active');
-  }
-
-  // Dots
-  [1,2,3].forEach(i => {
-    const d = document.getElementById('d' + i);
-    if (!d) return;
+  document.getElementById('s1').classList.remove('active');
+  document.getElementById('s2').classList.remove('active');
+  hideResults();
+  if (n <= 2) document.getElementById('s'+n).classList.add('active');
+  [1,2,3].forEach(function(i) {
+    var d = document.getElementById('d'+i);
     d.classList.remove('active','done');
     if (i < n) d.classList.add('done');
     if (i === n) d.classList.add('active');
   });
 }
 
-function hideAllResults() {
-  ['aiGen','cvResult','payStep','waitDiv'].forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.style.display = '';
-    el.classList.remove('show');
+function hideResults() {
+  ['aiGen','cvResult','payStep','waitDiv'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) { el.style.display=''; el.classList.remove('show'); }
   });
 }
 
-/* =====================================================
-   FOTO
-   ===================================================== */
+// FOTO
 function togglePhoto(val) {
   STATE.hasPhoto = val;
   document.getElementById('btnNoFoto').classList.toggle('active', !val);
@@ -1258,394 +881,283 @@ function togglePhoto(val) {
 }
 
 function handlePhoto(e) {
-  const file = e.target.files[0];
+  var file = e.target.files[0];
   if (!file) return;
-  // Validar tamaño (máx 5MB)
-  if (file.size > 5 * 1024 * 1024) {
-    showToast('La foto es muy grande. Máximo 5MB.');
-    return;
-  }
-  const reader = new FileReader();
-  reader.onload = ev => {
+  if (file.size > 5*1024*1024) { showToast('La foto es muy grande. Maximo 5MB.'); return; }
+  var r = new FileReader();
+  r.onload = function(ev) {
     STATE.photoData = ev.target.result;
-    const p = document.getElementById('photoPreview');
+    var p = document.getElementById('photoPreview');
     p.src = STATE.photoData;
     p.style.display = 'block';
   };
-  reader.onerror = () => showToast('No se pudo leer la imagen.');
-  reader.readAsDataURL(file);
+  r.readAsDataURL(file);
 }
 
-/* =====================================================
-   RATE LIMIT — lado cliente (soft, complementa servidor)
-   ===================================================== */
-const MAX_PREVIEWS = 3;
-
-function getPreviewCount() {
-  try { return parseInt(localStorage.getItem('cvPreviews') || '0'); } catch(e) { return 0; }
-}
-function incrementPreviewCount() {
-  try { localStorage.setItem('cvPreviews', getPreviewCount() + 1); } catch(e) {}
-}
-function checkPreviewLimit() {
-  if (getPreviewCount() >= MAX_PREVIEWS) {
-    showToast('Ya usaste tus 3 previews gratis. ¡Comprá tu CV por solo ₲50.000!', 5000);
-    setTimeout(() => showPayment(), 1500);
+// RATE LIMIT
+function getCount() { try { return parseInt(localStorage.getItem('cvPreviews')||'0'); } catch(e){return 0;} }
+function incCount() { try { localStorage.setItem('cvPreviews', getCount()+1); } catch(e){} }
+function checkLimit() {
+  if (getCount() >= 3) {
+    showToast('Ya usaste tus 3 previews gratis. Compra tu CV por solo 50.000!', 5000);
+    setTimeout(showPayment, 1800);
     return false;
   }
   return true;
 }
 
-/* =====================================================
-   CONSTRUIR PROMPT
-   ===================================================== */
-function buildPrompt(formatKey) {
-  const name       = document.getElementById('fname').value.trim();
-  const profession = document.getElementById('fprofession').value.trim();
-  const exp        = document.getElementById('fexp').value;
-  const experience = document.getElementById('fexperience').value.trim();
-  const education  = document.getElementById('feducation').value.trim();
-  const certs      = document.getElementById('fcerts').value.trim();
-  const skills     = document.getElementById('fskills').value.trim();
-  const job        = document.getElementById('fjob').value.trim();
-  const jobdesc    = document.getElementById('fjobdesc').value.trim();
-
-  return `Sos un experto en recursos humanos y redacción de CVs profesionales.
-
-Generá un CV completo y profesional en español para la siguiente persona:
-- Nombre: ${name}
-- Profesión: ${profession}
-- Años de experiencia: ${exp || 'No especificado'}
-- Detalle de experiencia: ${experience || 'No especificado'}
-- Educación: ${education || 'No especificada'}
-- Certificados/cursos: ${certs || 'No especificados'}
-- Habilidades: ${skills || 'No especificadas'}
-- Incluir foto: ${STATE.hasPhoto ? 'Sí, el cliente adjuntará su foto' : 'No lleva foto'}
-
-PUESTO AL QUE APLICA: ${job}
-${jobdesc ? `\nDESCRIPCIÓN DEL PUESTO:\n${jobdesc}` : ''}
-
-FORMATO REQUERIDO: ${FORMAT_INSTRUCTIONS[formatKey]}
-
-INSTRUCCIONES:
-- Adaptá el CV específicamente al puesto usando palabras clave de la descripción.
-- No inventes datos; si algo no fue proporcionado, omitilo elegantemente.
-- Redactá un perfil profesional impactante de 3-4 líneas al inicio.
-- Usá secciones claras y bien estructuradas según el formato indicado.
-- Tono profesional, en español neutro (salvo formato USA que puede ser en inglés).
-- Texto limpio sin asteriscos, sin markdown, sin guiones decorativos.
-- Separar secciones con una línea en blanco.`;
+// PROMPT
+function buildPrompt(fmt) {
+  var name = document.getElementById('fname').value.trim();
+  var prof = document.getElementById('fprofession').value.trim();
+  var exp  = document.getElementById('fexp').value;
+  var expt = document.getElementById('fexperience').value.trim();
+  var edu  = document.getElementById('feducation').value.trim();
+  var cert = document.getElementById('fcerts').value.trim();
+  var ski  = document.getElementById('fskills').value.trim();
+  var job  = document.getElementById('fjob').value.trim();
+  var jd   = document.getElementById('fjobdesc').value.trim();
+  return 'Sos un experto en recursos humanos y redaccion de CVs profesionales.\n\n' +
+    'Genera un CV completo en espanol para:\n' +
+    '- Nombre: ' + name + '\n' +
+    '- Profesion: ' + prof + '\n' +
+    '- Experiencia: ' + (exp||'No indicado') + '\n' +
+    '- Detalle: ' + (expt||'No indicado') + '\n' +
+    '- Educacion: ' + (edu||'No indicada') + '\n' +
+    '- Certificados: ' + (cert||'No indicados') + '\n' +
+    '- Habilidades: ' + (ski||'No indicadas') + '\n' +
+    '- Foto: ' + (STATE.hasPhoto?'Si, el cliente adjuntara su foto':'No lleva foto') + '\n\n' +
+    'PUESTO: ' + job + '\n' +
+    (jd ? 'DESCRIPCION:\n' + jd + '\n' : '') + '\n' +
+    'FORMATO: ' + FORMAT_INSTRUCTIONS[fmt] + '\n\n' +
+    'INSTRUCCIONES: Adapta el CV al puesto con palabras clave del aviso. No inventes datos. ' +
+    'Redacta un perfil profesional impactante de 3-4 lineas al inicio. ' +
+    'Texto limpio sin asteriscos ni markdown.';
 }
 
-/* =====================================================
-   GENERAR CV — lógica principal
-   ===================================================== */
-async function generateCV() {
+// GENERAR CV
+function generateCV() {
   clearErrors();
-
-  // Validar campos obligatorios del paso 2
-  const job = document.getElementById('fjob').value.trim();
-  if (!job) {
-    setFieldError('fjob', 'err-fjob', true);
+  if (!document.getElementById('fjob').value.trim()) {
+    setFieldError('fjob','err-fjob',true);
     return;
   }
+  if (!checkLimit()) return;
 
-  if (!checkPreviewLimit()) return;
-
-  STATE.generateAll = document.getElementById('chkAllFormats').checked;
-  const formatsToGenerate = STATE.generateAll
-    ? ['latam', 'europass', 'usa', 'academico']
-    : [STATE.currentFormat];
-
-  // Resetear estado
+  var genAll = document.getElementById('chkAllFormats').checked;
+  var fmts = genAll ? ['latam','europass','usa','academico'] : [STATE.currentFormat];
   STATE.cvContents = {};
 
-  // Ocultar paso 2, mostrar spinner
   document.getElementById('s2').classList.remove('active');
-  const aiGen = document.getElementById('aiGen');
-  aiGen.style.display = 'block';
+  document.getElementById('aiGen').style.display = 'block';
 
-  // Animar dots de loading
-  const aiItems = ['ai1','ai2','ai3','ai4','ai5'];
-  for (let i = 0; i < aiItems.length; i++) {
-    await delay(600);
-    const el = document.getElementById(aiItems[i]);
-    if (el) {
-      el.classList.add('done');
-      el.querySelector('i').className = 'fas fa-check';
+  var items = ['ai1','ai2','ai3','ai4','ai5'];
+  var idx = 0;
+  function animNext() {
+    if (idx >= items.length) {
+      runGeneration(fmts);
+      return;
     }
+    var el = document.getElementById(items[idx]);
+    if (el) { el.classList.add('done'); el.querySelector('i').className = 'fas fa-check'; }
+    idx++;
+    setTimeout(animNext, 600);
   }
-
-  // Actualizar dots
-  [1,2,3].forEach(i => document.getElementById('d'+i)?.classList.add('done'));
-
-  // Generar cada formato
-  if (STATE.generateAll) {
-    document.getElementById('aiText').textContent = 'Generando los 4 formatos...';
-    document.getElementById('aiSub').textContent = 'Esto tarda un poco más. Vale la pena.';
-  }
-
-  for (const fmt of formatsToGenerate) {
-    const prompt = buildPrompt(fmt);
-    try {
-      const res = await fetch('/.netlify/functions/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt }),
-      });
-
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        if (res.status === 429) {
-          STATE.cvContents[fmt] = '⚠️ Llegaste al límite de previews gratuitas. Comprá tu CV para continuar.';
-        } else if (res.status === 403) {
-          STATE.cvContents[fmt] = '⚠️ Error de autorización. Recargá la página e intentá de nuevo.';
-        } else {
-          STATE.cvContents[fmt] = `⚠️ Error generando este formato (${res.status}). Intentá de nuevo o escribinos por WhatsApp.`;
-        }
-      } else {
-        const data = await res.json();
-        STATE.cvContents[fmt] = data.content?.[0]?.text || '⚠️ Error procesando la respuesta. Intentá de nuevo.';
-      }
-    } catch(e) {
-      console.error('Error fetch:', e);
-      STATE.cvContents[fmt] = '⚠️ Error de conexión. Verificá tu internet o escribinos por WhatsApp al +595 992 954 169.';
-    }
-  }
-
-  // Incrementar contador de previews
-  incrementPreviewCount();
-
-  // Guardar en historial
-  const firstFmt = formatsToGenerate[0];
-  if (STATE.cvContents[firstFmt]) {
-    saveToHistory(STATE.cvContents);
-  }
-
-  // Ocultar spinner, mostrar resultado
-  aiGen.style.display = 'none';
-  renderResults(formatsToGenerate);
+  animNext();
 }
 
-/* =====================================================
-   RENDERIZAR TABS Y PANELS DE RESULTADO
-   ===================================================== */
-function renderResults(formats) {
-  const tabsEl   = document.getElementById('formatTabs');
-  const panelsEl = document.getElementById('formatPanels');
-  tabsEl.innerHTML   = '';
-  panelsEl.innerHTML = '';
+function runGeneration(fmts) {
+  if (fmts.length > 1) {
+    document.getElementById('aiText').textContent = 'Generando ' + fmts.length + ' formatos...';
+    document.getElementById('aiSub').textContent = 'Esto tarda un poco mas. Vale la pena.';
+  }
 
-  formats.forEach((fmt, idx) => {
-    // Tab
-    const tab = document.createElement('button');
+  var i = 0;
+  function next() {
+    if (i >= fmts.length) {
+      incCount();
+      saveHistory(STATE.cvContents);
+      document.getElementById('aiGen').style.display = 'none';
+      renderResults(fmts);
+      return;
+    }
+    var fmt = fmts[i];
+    i++;
+    fetch('/.netlify/functions/chat', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({prompt: buildPrompt(fmt)})
+    })
+    .then(function(res) {
+      if (res.status === 429) { STATE.cvContents[fmt] = 'Limite alcanzado. Compra tu CV para continuar.'; next(); return; }
+      if (!res.ok) { STATE.cvContents[fmt] = 'Error ' + res.status + '. Intentá de nuevo o escribinos por WhatsApp.'; next(); return; }
+      return res.json().then(function(data) {
+        STATE.cvContents[fmt] = (data.content && data.content[0] && data.content[0].text) || 'Error procesando respuesta.';
+        next();
+      });
+    })
+    .catch(function(e) {
+      STATE.cvContents[fmt] = 'Error de conexion. Verifica tu internet o escribinos por WhatsApp al +595 992 954 169.';
+      next();
+    });
+  }
+  next();
+}
+
+// RENDER TABS
+function renderResults(fmts) {
+  var tabs = document.getElementById('formatTabs');
+  var panels = document.getElementById('formatPanels');
+  tabs.innerHTML = '';
+  panels.innerHTML = '';
+
+  fmts.forEach(function(fmt, idx) {
+    var tab = document.createElement('button');
     tab.type = 'button';
-    tab.className = 'format-tab' + (idx === 0 ? ' active' : '');
+    tab.className = 'format-tab' + (idx===0?' active':'');
     tab.textContent = FORMAT_LABELS[fmt];
     tab.dataset.fmt = fmt;
-    tab.addEventListener('click', () => switchTab(fmt));
-    tabsEl.appendChild(tab);
+    tab.addEventListener('click', function() { switchTab(fmt); });
+    tabs.appendChild(tab);
 
-    // Panel
-    const panel = document.createElement('div');
-    panel.className = 'format-panel' + (idx === 0 ? ' active' : '');
-    panel.id = 'panel-' + fmt;
-
-    const content = STATE.cvContents[fmt] || '';
-    panel.innerHTML = `
-      <div class="cv-output">
-        <div class="watermark"><span>PREVIEW</span></div>
-        <div class="cv-text">${escapeHTML(content).replace(/\n/g, '<br>')}</div>
-      </div>`;
-    panelsEl.appendChild(panel);
+    var content = STATE.cvContents[fmt] || '';
+    var escaped = content.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+    var panel = document.createElement('div');
+    panel.className = 'format-panel' + (idx===0?' active':'');
+    panel.id = 'panel-'+fmt;
+    panel.innerHTML = '<div class="cv-output"><div class="watermark"><span>PREVIEW</span></div><div>' + escaped + '</div></div>';
+    panels.appendChild(panel);
   });
 
-  STATE.activeFormat = formats[0];
-
-  // Mostrar sección resultado
-  const cvResult = document.getElementById('cvResult');
-  cvResult.style.display = 'block';
-  cvResult.classList.add('show');
-
+  STATE.activeFormat = fmts[0];
+  var r = document.getElementById('cvResult');
+  r.style.display = 'block';
+  r.classList.add('show');
   renderHistory();
 }
 
 function switchTab(fmt) {
   STATE.activeFormat = fmt;
-  document.querySelectorAll('.format-tab').forEach(t => t.classList.toggle('active', t.dataset.fmt === fmt));
-  document.querySelectorAll('.format-panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + fmt));
+  document.querySelectorAll('.format-tab').forEach(function(t) { t.classList.toggle('active', t.dataset.fmt===fmt); });
+  document.querySelectorAll('.format-panel').forEach(function(p) { p.classList.toggle('active', p.id==='panel-'+fmt); });
 }
 
-function escapeHTML(str) {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
-
-/* =====================================================
-   HISTORIAL LOCAL (con try/catch para Safari privado)
-   ===================================================== */
-function saveToHistory(cvContents) {
+// HISTORIAL
+function saveHistory(contents) {
   try {
-    let history = JSON.parse(localStorage.getItem('cvHistory') || '[]');
-    const firstKey = Object.keys(cvContents)[0];
-    const preview = cvContents[firstKey]?.substring(0, 80) + '...' || '';
-    history.unshift({
-      preview,
-      contents: cvContents,
-      date: new Date().toLocaleString('es-PY'),
-    });
-    if (history.length > 5) history.pop();
-    localStorage.setItem('cvHistory', JSON.stringify(history));
-  } catch(e) {
-    // localStorage no disponible (modo privado Safari) — silenciar
-  }
+    var h = JSON.parse(localStorage.getItem('cvHistory')||'[]');
+    var k = Object.keys(contents)[0];
+    h.unshift({preview:(contents[k]||'').substring(0,80)+'...', contents:contents, date:new Date().toLocaleString('es-PY')});
+    if (h.length>5) h.pop();
+    localStorage.setItem('cvHistory', JSON.stringify(h));
+  } catch(e) {}
 }
 
 function renderHistory() {
   try {
-    const history = JSON.parse(localStorage.getItem('cvHistory') || '[]');
-    const list = document.getElementById('historyList');
-    if (!list) return;
-    if (history.length === 0) {
-      list.innerHTML = '<div style="font-size:.75rem;color:var(--muted);text-align:center;padding:.5rem">Sin historial aún</div>';
-      return;
-    }
-    list.innerHTML = history.map((item, idx) => `
-      <div class="history-item">
-        <span>${item.preview || 'Preview guardada'}</span>
-        <button onclick="loadHistory(${idx})" type="button">Ver</button>
-      </div>
-    `).join('');
+    var h = JSON.parse(localStorage.getItem('cvHistory')||'[]');
+    var el = document.getElementById('historyList');
+    if (!el) return;
+    if (!h.length) { el.innerHTML='<div style="font-size:.75rem;color:var(--muted);text-align:center;padding:.5rem">Sin historial aun</div>'; return; }
+    el.innerHTML = h.map(function(item,i) {
+      return '<div class="history-item"><span>'+item.preview+'</span><button onclick="loadHistory('+i+')" type="button">Ver</button></div>';
+    }).join('');
   } catch(e) {}
 }
 
-function loadHistory(index) {
+function loadHistory(i) {
   try {
-    const history = JSON.parse(localStorage.getItem('cvHistory') || '[]');
-    if (history[index]?.contents) {
-      STATE.cvContents = history[index].contents;
-      const formats = Object.keys(history[index].contents);
-      renderResults(formats);
+    var h = JSON.parse(localStorage.getItem('cvHistory')||'[]');
+    if (h[i] && h[i].contents) {
+      STATE.cvContents = h[i].contents;
+      renderResults(Object.keys(h[i].contents));
     }
   } catch(e) {}
 }
 
-/* =====================================================
-   COMPARTIR POR WHATSAPP
-   ===================================================== */
+// COMPARTIR
 function shareWhatsApp() {
-  const content = STATE.cvContents[STATE.activeFormat] || '';
-  if (!content) { showToast('Primero generá tu CV'); return; }
-  const text = encodeURIComponent('Mirá el CV que generé con CVitae:\n\n' + content.substring(0, 400) + '...\n\nGenerá el tuyo en: https://cvitaepy.netlify.app');
-  window.open('https://wa.me/?text=' + text, '_blank');
+  var c = STATE.cvContents[STATE.activeFormat] || '';
+  if (!c) { showToast('Primero generá tu CV'); return; }
+  var txt = encodeURIComponent('Mira el CV que generé con CVitae:\n\n'+c.substring(0,400)+'...\n\nGenerá el tuyo: https://cvitaepy.netlify.app');
+  window.open('https://wa.me/?text='+txt,'_blank');
 }
 
-/* =====================================================
-   PAGO
-   ===================================================== */
+// PAGO
 function showPayment() {
-  document.getElementById('cvResult').style.display = 'none';
-  const payStep = document.getElementById('payStep');
-  payStep.style.display = 'block';
-  payStep.classList.add('show');
-  payStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.getElementById('cvResult').style.display='none';
+  var p = document.getElementById('payStep');
+  p.style.display='block';
+  p.classList.add('show');
+  p.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 function selectPlan(plan) {
   STATE.selectedPlan = plan;
-  document.getElementById('planBasic').classList.toggle('selected', plan === 'basic');
-  document.getElementById('planPro').classList.toggle('selected', plan === 'pro');
+  document.getElementById('planBasic').classList.toggle('selected', plan==='basic');
+  document.getElementById('planPro').classList.toggle('selected', plan==='pro');
 }
 
 function confirmPayment() {
-  const label = STATE.selectedPlan === 'basic' ? 'CV Digital — ₲50.000' : 'Portafolio Web — ₲120.000';
-  const name  = document.getElementById('fname').value || 'cliente';
-  const job   = document.getElementById('fjob').value || 'el puesto indicado';
-  const wa    = document.getElementById('fwhatsapp').value || 'no indicado';
-  const msg   = encodeURIComponent(
-    `Hola! Acabo de realizar el pago del plan ${label}.\n\n` +
-    `Nombre: ${name}\n` +
-    `Puesto que busco: ${job}\n` +
-    `Mi WhatsApp: ${wa}\n\n` +
-    `Te mando el comprobante ahora. ✅`
-  );
-  window.open('https://wa.me/595992954169?text=' + msg, '_blank');
-  document.getElementById('payStep').style.display = 'none';
-  const waitDiv = document.getElementById('waitDiv');
-  waitDiv.style.display = 'block';
-  waitDiv.classList.add('show');
+  var lbl = STATE.selectedPlan==='basic' ? 'CV Digital — 50.000 Gs' : 'Portafolio Web — 120.000 Gs';
+  var name = document.getElementById('fname').value||'cliente';
+  var job  = document.getElementById('fjob').value||'el puesto indicado';
+  var wa   = document.getElementById('fwhatsapp').value||'no indicado';
+  var msg  = encodeURIComponent('Hola! Acabo de realizar el pago del plan '+lbl+'.\n\nNombre: '+name+'\nPuesto: '+job+'\nMi WhatsApp: '+wa+'\n\nTe mando el comprobante ahora.');
+  window.open('https://wa.me/595992954169?text='+msg,'_blank');
+  document.getElementById('payStep').style.display='none';
+  var w = document.getElementById('waitDiv');
+  w.style.display='block';
+  w.classList.add('show');
 }
 
-/* =====================================================
-   COPY TO CLIPBOARD (reemplaza alert nativo)
-   ===================================================== */
-function copyText(text, successMsg) {
-  if (navigator.clipboard?.writeText) {
-    navigator.clipboard.writeText(text)
-      .then(() => showToast('✓ ' + (successMsg || 'Copiado: ' + text)))
-      .catch(() => fallbackCopy(text, successMsg));
-  } else {
-    fallbackCopy(text, successMsg);
-  }
+// COPIAR
+function copyText(text, msg) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function() { showToast(msg||'Copiado'); }).catch(function() { fallbackCopy(text,msg); });
+  } else { fallbackCopy(text,msg); }
 }
-function fallbackCopy(text, successMsg) {
-  const ta = document.createElement('textarea');
-  ta.value = text;
-  ta.style.cssText = 'position:fixed;top:-999px;opacity:0';
-  document.body.appendChild(ta);
-  ta.select();
-  try {
-    document.execCommand('copy');
-    showToast('✓ ' + (successMsg || 'Copiado'));
-  } catch(e) {
-    showToast('No se pudo copiar. Copiá manualmente: ' + text, 5000);
-  }
+function fallbackCopy(text,msg) {
+  var ta = document.createElement('textarea');
+  ta.value=text; ta.style.cssText='position:fixed;top:-999px;opacity:0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); showToast(msg||'Copiado'); } catch(e) { showToast('Copiá manualmente: '+text,5000); }
   document.body.removeChild(ta);
 }
 
-/* =====================================================
-   FAQ TOGGLE
-   ===================================================== */
+// FAQ
 function toggleFaq(el) {
-  const item = el.closest('.faq-item');
-  const isOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  var item = el.parentElement;
+  var isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open');});
   if (!isOpen) item.classList.add('open');
 }
 
-/* =====================================================
-   UTILS
-   ===================================================== */
-function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+// FADE IN — usando un enfoque directo sin IntersectionObserver como fallback
+function initFadeIn() {
+  var els = document.querySelectorAll('.fade-in');
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) { if(e.isIntersecting) e.target.classList.add('visible'); });
+    }, {threshold:0.05, rootMargin:'0px 0px -20px 0px'});
+    els.forEach(function(el) { obs.observe(el); });
+  } else {
+    // Fallback: mostrar todo directamente
+    els.forEach(function(el) { el.classList.add('visible'); });
+  }
+}
 
-/* =====================================================
-   INTERSECTION OBSERVER (animaciones fade-in)
-   ===================================================== */
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
-
-/* =====================================================
-   SCROLL SUAVE PARA LINKS INTERNOS
-   ===================================================== */
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const target = document.querySelector(a.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      window.scrollTo({ top: target.offsetTop - 60, behavior: 'smooth' });
-    }
+// SCROLL SUAVE
+document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); window.scrollTo({top:target.offsetTop-60,behavior:'smooth'}); }
   });
 });
 
-/* =====================================================
-   INIT
-   ===================================================== */
+// INIT
 renderHistory();
+initFadeIn();
 </script>
 </body>
 </html>
