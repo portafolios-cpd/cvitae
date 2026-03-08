@@ -1626,4 +1626,26 @@ function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
    ===================================================== */
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold
+}, { threshold, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+/* =====================================================
+   SCROLL SUAVE PARA LINKS INTERNOS
+   ===================================================== */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      window.scrollTo({ top: target.offsetTop - 60, behavior: 'smooth' });
+    }
+  });
+});
+
+/* =====================================================
+   INIT
+   ===================================================== */
+renderHistory();
+</script>
+</body>
+</html>
