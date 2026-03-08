@@ -943,12 +943,12 @@ footer{border-top:1px solid var(--border);padding:2rem 0}
             <div class="pay-method">
               <div class="pay-method-title"><i class="fas fa-building-columns"></i> Transferencia bancaria</div>
               <div class="pay-detail">0992954169 <small>· Isaías Solaeche</small></div>
-              <div class="pay-detail">isasolaeche@gmail.com <small>· Isaías Solaeche</small></div>
+              <div class="pay-detail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a9c0dac8dac6c5c8cccac1cce9cec4c8c0c587cac6c4">[email&#160;protected]</a> <small>· Isaías Solaeche</small></div>
               <button class="pay-copy" onclick="copyText('0992954169', 'Alias copiado')" type="button">Copiar alias</button>
             </div>
             <div class="pay-method">
               <div class="pay-method-title"><i class="fab fa-paypal"></i> PayPal (pagos internacionales)</div>
-              <div class="pay-detail">isasolaeche@hotmail.com</div>
+              <div class="pay-detail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b7dec4d6c4d8dbd6d2d4dfd2f7dfd8c3dad6dedb99d4d8da">[email&#160;protected]</a></div>
               <button class="pay-copy" onclick="copyText('isasolaeche@hotmail.com', 'Email copiado')" type="button">Copiar email PayPal</button>
             </div>
           </div>
@@ -1014,7 +1014,7 @@ footer{border-top:1px solid var(--border);padding:2rem 0}
     <div class="faq-list">
       <div class="faq-item fade-in">
         <div class="faq-q" onclick="toggleFaq(this)">¿Cómo pago? ¿Aceptan transferencia? <i class="fas fa-chevron-down"></i></div>
-        <div class="faq-a"><p>Sí, aceptamos transferencia bancaria (alias 0992954169 o isasolaeche@gmail.com, a nombre de Isaías Solaeche) y PayPal para pagos internacionales (isasolaeche@hotmail.com). Todo se coordina por WhatsApp.</p></div>
+        <div class="faq-a"><p>Sí, aceptamos transferencia bancaria (alias 0992954169 o <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9ff6ecfeecf0f3fefafcf7fadff8f2fef6f3b1fcf0f2">[email&#160;protected]</a>, a nombre de Isaías Solaeche) y PayPal para pagos internacionales (<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="751c0614061a191410161d10351d1a0118141c195b161a18">[email&#160;protected]</a>). Todo se coordina por WhatsApp.</p></div>
       </div>
       <div class="faq-item fade-in">
         <div class="faq-q" onclick="toggleFaq(this)">¿El CV lo hace realmente una IA? <i class="fas fa-chevron-down"></i></div>
@@ -1062,7 +1062,7 @@ footer{border-top:1px solid var(--border);padding:2rem 0}
       <li><a href="#ejemplos">Ejemplos</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
-    <div class="footer-copy">© 2026 CVitae · isasolaeche@gmail.com</div>
+    <div class="footer-copy">© 2026 CVitae · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dab3a9bba9b5b6bbbfb9b2bf9abdb7bbb3b6f4b9b5b7">[email&#160;protected]</a></div>
   </div>
 </footer>
 
@@ -1075,7 +1075,7 @@ footer{border-top:1px solid var(--border);padding:2rem 0}
 <!-- ===================================================
      JAVASCRIPT
      =================================================== -->
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* =====================================================
    ESTADO GLOBAL
    ===================================================== */
@@ -1391,10 +1391,7 @@ async function generateCV() {
       const res = await fetch('/.netlify/functions/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          prompt,
-          token: 'cvitae-2026-xK9mP3qR7vL2nT8wY5',
-        }),
+        body: JSON.stringify({ prompt }),
       });
 
       if (!res.ok) {
@@ -1629,27 +1626,4 @@ function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
    ===================================================== */
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
-
-/* =====================================================
-   SCROLL SUAVE PARA LINKS INTERNOS
-   ===================================================== */
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const target = document.querySelector(a.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      window.scrollTo({ top: target.offsetTop - 60, behavior: 'smooth' });
-    }
-  });
-});
-
-/* =====================================================
-   INIT
-   ===================================================== */
-renderHistory();
-</script>
-</body>
-</html>
-
+}, { threshold
