@@ -1,0 +1,16 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+  command = "echo 'No build step'"
+
+[functions]
+  node_bundler = "esbuild"
+
+[functions."chat"]
+  timeout = 30
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
