@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — CVitae</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0a0a0f;--paper:#f5f0e8;--cream:#ede8d8;--offwhite:#faf8f4;
+  --gold:#c9a84c;--gold2:#e8c97a;--teal:#0d5c63;--rust:#c24b2a;--green:#1a7a4a;
+  --text:#2a2520;--muted:#7a7060;--border:rgba(42,37,32,0.12);
+  --grad-gold:linear-gradient(135deg,#c9a84c,#e8c97a);
+  --shadow:0 4px 24px rgba(10,10,15,0.1);
+}
+body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* LOGIN */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+.login-box{background:var(--offwhite);border:1.5px solid var(--border);border-radius:6px;padding:2.5rem;width:100%;max-width:380px;box-shadow:var(--shadow)}
+.login-logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--ink);text-align:center;margin-bottom:.3rem}
+.login-logo em{font-style:italic;color:var(--gold)}
+.login-sub{text-align:center;font-size:.78rem;color:var(--muted);margin-bottom:2rem}
+.field{margin-bottom:1rem}
+.field label{display:block;font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.35rem}
+.field input{width:100%;background:var(--paper);border:1.5px solid var(--border);border-radius:3px;padding:.75rem 1rem;color:var(--ink);font-family:inherit;font-size:.9rem;outline:none;transition:border .2s}
+.field input:focus{border-color:var(--gold)}
+.btn-full{width:100%;padding:.85rem;border-radius:3px;background:var(--ink);color:var(--paper);border:none;font-family:inherit;font-size:.88rem;font-weight:600;cursor:pointer;transition:opacity .2s;letter-spacing:.03em}
+.btn-full:hover{opacity:.85}
+.login-err{display:none;text-align:center;font-size:.78rem;color:var(--rust);margin-top:.8rem}
+.login-err.show{display:block}
+
+/* DASHBOARD */
+.dashboard{display:none}
+.topbar{background:var(--ink);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.topbar-logo{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:900;color:var(--paper)}
+.topbar-logo em{font-style:italic;color:var(--gold)}
+.topbar-right{display:flex;align-items:center;gap:1rem}
+.topbar-right span{font-size:.75rem;color:rgba(245,240,232,.5)}
+.btn-sm{padding:.4rem 1rem;border-radius:3px;font-size:.75rem;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-logout{background:rgba(245,240,232,.08);color:var(--paper);border:1px solid rgba(245,240,232,.15)}
+.btn-logout:hover{background:rgba(245,240,232,.15)}
+.btn-refresh{background:var(--grad-gold);color:var(--ink)}
+.btn-refresh:hover{opacity:.88}
+
+.main{max-width:1000px;margin:0 auto;padding:2rem 1.5rem}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.stat-card{background:var(--offwhite);border:1.5px solid var(--border);border-radius:4px;padding:1.2rem 1.5rem}
+.stat-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--ink);line-height:1}
+.stat-label{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-top:.2rem}
+.stat-card.pending .stat-num{color:var(--rust)}
+.stat-card.sent .stat-num{color:var(--green)}
+
+/* ORDERS */
+.section-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--ink);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.orders-list{display:flex;flex-direction:column;gap:.8rem}
+.empty{text-align:center;padding:3rem;color:var(--muted);font-size:.88rem}
+.empty i{font-size:2rem;display:block;margin-bottom:.8rem;color:var(--border)}
+
+.order-card{background:var(--offwhite);border:1.5px solid var(--border);border-radius:4px;overflow:hidden;transition:border .2s}
+.order-card.pending{border-left:3px solid var(--rust)}
+.order-card.sent{border-left:3px solid var(--green)}
+.order-head{padding:1rem 1.2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;cursor:pointer}
+.order-head:hover{background:var(--cream)}
+.order-info{}
+.order-name{font-size:.95rem;font-weight:600;color:var(--ink);margin-bottom:.15rem}
+.order-sub{font-size:.72rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:.4rem .8rem}
+.order-sub span{display:flex;align-items:center;gap:.25rem}
+.order-sub i{color:var(--gold);font-size:.6rem}
+.order-actions{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.badge{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:.2rem .7rem;border-radius:30px}
+.badge.pending{background:rgba(194,75,42,.08);color:var(--rust);border:1px solid rgba(194,75,42,.2)}
+.badge.sent{background:rgba(26,122,74,.08);color:var(--green);border:1px solid rgba(26,122,74,.2)}
+.btn-approve{background:var(--ink);color:var(--paper);padding:.5rem 1.2rem;border-radius:3px;border:none;font-family:inherit;font-size:.78rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:.35rem;transition:all .2s}
+.btn-approve:hover{background:var(--teal)}
+.btn-approve:disabled{opacity:.5;cursor:not-allowed}
+.btn-del{background:transparent;color:var(--muted);padding:.5rem .8rem;border-radius:3px;border:1px solid var(--border);font-family:inherit;font-size:.75rem;cursor:pointer;transition:all .2s}
+.btn-del:hover{border-color:var(--rust);color:var(--rust)}
+.btn-view{background:rgba(201,168,76,.08);color:var(--gold);padding:.5rem .9rem;border-radius:3px;border:1px solid rgba(201,168,76,.2);font-family:inherit;font-size:.75rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.3rem;transition:all .2s}
+.btn-view:hover{background:rgba(201,168,76,.15)}
+.order-detail{display:none;padding:0 1.2rem 1.2rem;border-top:1px solid var(--border)}
+.order-detail.show{display:block}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem .8rem;margin-top:.8rem;font-size:.78rem}
+.detail-item{color:var(--muted)}
+.detail-item strong{color:var(--ink);display:block;font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.1rem}
+.cv-preview{background:var(--cream);border-radius:3px;padding:1rem;margin-top:.8rem;font-size:.72rem;color:var(--text);line-height:1.6;max-height:200px;overflow-y:auto;border:1px solid var(--border)}
+
+/* TOAST */
+.toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(10px);z-index:9999;background:var(--ink);color:var(--paper);border-radius:3px;padding:.7rem 1.5rem;font-size:.8rem;opacity:0;transition:all .28s;pointer-events:none;display:flex;align-items:center;gap:.4rem;white-space:nowrap;box-shadow:0 8px 32px rgba(10,10,15,.3)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.success i{color:#4ade80}
+.toast.error i{color:#f87171}
+
+@media(max-width:600px){.stats-row{grid-template-columns:1fr}.detail-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <div class="login-logo">CV<em>itae</em></div>
+    <div class="login-sub">Panel de administración</div>
+    <div class="field">
+      <label>Contraseña</label>
+      <input type="password" id="pwInput" placeholder="Tu contraseña admin" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="btn-full" onclick="doLogin()"><i class="fas fa-lock-open"></i> Entrar</button>
+    <div class="login-err" id="loginErr">Contraseña incorrecta</div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard">
+  <div class="topbar">
+    <div class="topbar-logo">CV<em>itae</em> — Admin</div>
+    <div class="topbar-right">
+      <span id="lastRefresh"></span>
+      <button class="btn-sm btn-refresh" onclick="loadOrders()"><i class="fas fa-sync-alt"></i> Actualizar</button>
+      <button class="btn-sm btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Salir</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num" id="statTotal">—</div><div class="stat-label">Total pedidos</div></div>
+      <div class="stat-card pending"><div class="stat-num" id="statPending">—</div><div class="stat-label">Pendientes</div></div>
+      <div class="stat-card sent"><div class="stat-num" id="statSent">—</div><div class="stat-label">Enviados</div></div>
+    </div>
+
+    <div class="section-title"><i class="fas fa-inbox"></i> Pedidos</div>
+    <div class="orders-list" id="ordersList">
+      <div class="empty"><i class="fas fa-inbox"></i> Cargando...</div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg"></span></div>
+
+<script>
+var PW = '';
+
+function doLogin() {
+  var pw = document.getElementById('pwInput').value;
+  if (!pw) return;
+  PW = pw;
+  // Verificar contraseña haciendo una llamada real
+  callAdmin('list').then(function(data) {
+    if (data.error) {
+      document.getElementById('loginErr').classList.add('show');
+      PW = '';
+    } else {
+      document.getElementById('loginWrap').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      renderOrders(data.orders || []);
+      // Auto-refresh cada 60 segundos
+      setInterval(loadOrders, 60000);
+    }
+  }).catch(function() {
+    document.getElementById('loginErr').classList.add('show');
+    PW = '';
+  });
+}
+
+function logout() {
+  PW = '';
+  document.getElementById('loginWrap').style.display = 'flex';
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('pwInput').value = '';
+  document.getElementById('loginErr').classList.remove('show');
+}
+
+function callAdmin(action, extra) {
+  return fetch('/.netlify/functions/admin', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(Object.assign({ password: PW, action: action }, extra || {}))
+  }).then(function(r) { return r.json(); });
+}
+
+function loadOrders() {
+  callAdmin('list').then(function(data) {
+    if (data.error) { toast('Error: ' + data.error, 'error'); return; }
+    renderOrders(data.orders || []);
+    document.getElementById('lastRefresh').textContent = 'Actualizado: ' + new Date().toLocaleTimeString('es-PY');
+  });
+}
+
+function renderOrders(orders) {
+  var pending = orders.filter(function(o) { return o.status === 'pending'; });
+  var sent = orders.filter(function(o) { return o.status === 'sent'; });
+  document.getElementById('statTotal').textContent = orders.length;
+  document.getElementById('statPending').textContent = pending.length;
+  document.getElementById('statSent').textContent = sent.length;
+
+  var list = document.getElementById('ordersList');
+  if (!orders.length) {
+    list.innerHTML = '<div class="empty"><i class="fas fa-inbox"></i> No hay pedidos aún</div>';
+    return;
+  }
+
+  list.innerHTML = orders.map(function(o) {
+    var isPending = o.status === 'pending';
+    var planLabel = o.plan === 'pro' ? 'Portafolio Web ₲120.000' : 'CV Digital ₲50.000';
+    var fmtLabel = { latam: 'Paraguay/Latam', europass: 'Europass', usa: 'USA Resume', academico: 'Académico' }[o.format] || o.format;
+    var date = new Date(o.createdAt).toLocaleString('es-PY', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+    return '<div class="order-card ' + o.status + '" id="card-' + o.id + '">' +
+      '<div class="order-head" onclick="toggleDetail(\'' + o.id + '\')">' +
+        '<div class="order-info">' +
+          '<div class="order-name">' + esc(o.name) + '</div>' +
+          '<div class="order-sub">' +
+            '<span><i class="fas fa-envelope"></i>' + esc(o.email) + '</span>' +
+            '<span><i class="fas fa-briefcase"></i>' + esc(o.job || o.profession) + '</span>' +
+            '<span><i class="fas fa-file-alt"></i>' + fmtLabel + '</span>' +
+            '<span><i class="fas fa-clock"></i>' + date + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="order-actions">' +
+          '<span class="badge ' + o.status + '">' + (isPending ? 'Pendiente' : 'Enviado') + '</span>' +
+          (isPending
+            ? '<button class="btn-approve" id="btn-' + o.id + '" onclick="approveOrder(event,\'' + o.id + '\')"><i class="fas fa-paper-plane"></i> Aprobar y enviar</button>'
+            : '<a class="btn-view" href="/cv.html?id=' + o.id + '" target="_blank"><i class="fas fa-eye"></i> Ver CV</a>') +
+          '<button class="btn-del" onclick="deleteOrder(event,\'' + o.id + '\')"><i class="fas fa-trash"></i></button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="order-detail" id="detail-' + o.id + '">' +
+        '<div class="detail-grid">' +
+          '<div class="detail-item"><strong>Nombre</strong>' + esc(o.name) + '</div>' +
+          '<div class="detail-item"><strong>Email</strong>' + esc(o.email) + '</div>' +
+          '<div class="detail-item"><strong>Profesión</strong>' + esc(o.profession) + '</div>' +
+          '<div class="detail-item"><strong>Puesto</strong>' + esc(o.job) + '</div>' +
+          '<div class="detail-item"><strong>Plan</strong>' + planLabel + '</div>' +
+          '<div class="detail-item"><strong>Formato</strong>' + fmtLabel + '</div>' +
+        '</div>' +
+        '<div class="cv-preview" id="cvprev-' + o.id + '">Haz clic para ver el CV...</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function toggleDetail(id) {
+  var det = document.getElementById('detail-' + id);
+  det.classList.toggle('show');
+  if (det.classList.contains('show')) {
+    // Cargar CV desde Blobs para preview
+    fetch('/.netlify/functions/get-cv?id=' + id)
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d.cvHtml) {
+          var prev = document.getElementById('cvprev-' + id);
+          prev.innerHTML = '<div style="transform:scale(0.6);transform-origin:top left;width:167%;pointer-events:none">' + d.cvHtml + '</div>';
+        }
+      });
+  }
+}
+
+function approveOrder(e, id) {
+  e.stopPropagation();
+  var btn = document.getElementById('btn-' + id);
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+  callAdmin('approve', { orderId: id }).then(function(data) {
+    if (data.error) {
+      toast('Error: ' + data.error, 'error');
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-paper-plane"></i> Aprobar y enviar';
+    } else {
+      toast('Email enviado correctamente a ' + data.message.split('a ')[1], 'success');
+      loadOrders();
+    }
+  }).catch(function() {
+    toast('Error de conexión', 'error');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-paper-plane"></i> Aprobar y enviar';
+  });
+}
+
+function deleteOrder(e, id) {
+  e.stopPropagation();
+  if (!confirm('¿Eliminar este pedido?')) return;
+  callAdmin('delete', { orderId: id }).then(function() {
+    loadOrders();
+    toast('Pedido eliminado', 'success');
+  });
+}
+
+function esc(s) {
+  if (!s) return '—';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+var _tt;
+function toast(msg, type) {
+  var el = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  el.className = 'toast show ' + (type || 'success');
+  clearTimeout(_tt);
+  _tt = setTimeout(function() { el.classList.remove('show'); }, 3500);
+}
+</script>
+</body>
+</html>
