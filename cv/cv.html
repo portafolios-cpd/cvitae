@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tu CV — CVitae</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0a0a0f;--paper:#f5f0e8;--cream:#ede8d8;--offwhite:#faf8f4;
+  --gold:#c9a84c;--gold2:#e8c97a;--teal:#0d5c63;--rust:#c24b2a;
+  --text:#2a2520;--muted:#7a7060;--border:rgba(42,37,32,0.12);
+  --grad-gold:linear-gradient(135deg,#c9a84c,#e8c97a,#b8923a);
+  --shadow:0 4px 32px rgba(10,10,15,0.12);
+}
+body{font-family:'Outfit',sans-serif;background:var(--paper);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* TOP BAR */
+.topbar{background:var(--ink);padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.topbar-logo{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:900;color:#f5f0e8;text-decoration:none}
+.topbar-logo em{font-style:italic;color:var(--gold)}
+.topbar-actions{display:flex;gap:.6rem;flex-wrap:wrap}
+.btn{padding:.55rem 1.3rem;border-radius:3px;font-weight:600;font-size:.8rem;cursor:pointer;border:none;font-family:inherit;display:inline-flex;align-items:center;gap:.4rem;text-decoration:none;transition:all .2s;letter-spacing:.02em}
+.btn-gold{background:var(--grad-gold);color:var(--ink)}
+.btn-gold:hover{opacity:.88;transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:#f5f0e8;border:1px solid rgba(245,240,232,.25)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.btn-wa{background:#25d366;color:#fff}
+.btn-wa:hover{background:#1fb855}
+
+/* LOADING */
+.loading{text-align:center;padding:5rem 2rem}
+.spin{width:48px;height:48px;border-radius:50%;border:2px solid var(--border);border-top-color:var(--gold);animation:spin 1s linear infinite;margin:0 auto 1.2rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading p{color:var(--muted);font-size:.9rem}
+
+/* ERROR */
+.error-box{max-width:480px;margin:4rem auto;text-align:center;padding:2rem}
+.error-box i{font-size:2.5rem;color:var(--rust);margin-bottom:1rem;display:block}
+.error-box h2{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--ink);margin-bottom:.5rem}
+.error-box p{color:var(--muted);font-size:.88rem;line-height:1.7}
+
+/* CV WRAPPER */
+.cv-container{max-width:820px;margin:2.5rem auto;padding:0 1.5rem 4rem}
+.cv-meta{text-align:center;margin-bottom:2rem}
+.cv-meta h1{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--ink);margin-bottom:.3rem}
+.cv-meta p{font-size:.82rem;color:var(--muted)}
+.cv-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(13,92,99,.07);border:1px solid rgba(13,92,99,.2);color:var(--teal);padding:.3rem .9rem;border-radius:30px;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-top:.7rem}
+
+/* CV DOC — same styles as index.html */
+.cv-doc{
+  background:var(--offwhite);
+  border:1.5px solid var(--border);
+  border-radius:6px;
+  box-shadow:var(--shadow);
+  padding:2.5rem;
+  font-family:'Outfit',sans-serif;
+  font-size:.84rem;
+  color:var(--text);
+  line-height:1.75;
+}
+.cv-doc .cvh-stripe{height:4px;background:var(--grad-gold);margin:-2.5rem -2.5rem 2rem;border-radius:4px 4px 0 0}
+.cv-doc .cvh-grid{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:start;margin-bottom:.9rem}
+.cv-doc .cvh-name{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--ink);letter-spacing:-.02em;line-height:1.05}
+.cv-doc .cvh-title{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:var(--teal);margin-top:.25rem}
+.cv-doc .cvh-photo{width:80px;height:80px;border-radius:4px;background:var(--grad-gold);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--ink);flex-shrink:0;overflow:hidden}
+.cv-doc .cvh-photo img{width:100%;height:100%;object-fit:cover}
+.cv-doc .cvh-contacts{display:flex;flex-wrap:wrap;gap:.35rem 1rem;padding:.85rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:1.3rem}
+.cv-doc .cvh-c{font-size:.7rem;color:var(--muted);display:flex;align-items:center;gap:.3rem}
+.cv-doc .cvh-c i{color:var(--gold);font-size:.62rem}
+.cv-doc .cvs{margin-bottom:1.3rem}
+.cv-doc .cvs-label{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.22em;color:var(--gold);display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem}
+.cv-doc .cvs-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.cv-doc .cvs-text{font-size:.82rem;color:var(--text);line-height:1.8}
+.cv-doc .cvb{margin-bottom:.95rem;padding-bottom:.95rem;border-bottom:1px solid var(--border)}
+.cv-doc .cvb:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0}
+.cv-doc .cvb-row{display:flex;justify-content:space-between;align-items:flex-start;gap:.8rem;margin-bottom:.22rem;flex-wrap:wrap}
+.cv-doc .cvb-title{font-size:.88rem;font-weight:700;color:var(--ink)}
+.cv-doc .cvb-period{font-size:.67rem;color:var(--muted);white-space:nowrap;background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.15);padding:.12rem .55rem;border-radius:2px}
+.cv-doc .cvb-sub{font-size:.73rem;color:var(--teal);font-weight:500;margin-bottom:.38rem}
+.cv-doc .cvb-list{list-style:none;padding:0;display:flex;flex-direction:column;gap:.22rem}
+.cv-doc .cvb-list li{font-size:.8rem;color:var(--text);padding-left:1.1rem;position:relative}
+.cv-doc .cvb-list li::before{content:'▸';position:absolute;left:0;color:var(--gold);font-size:.67rem;top:.05rem}
+.cv-doc .cv-tags{display:flex;flex-wrap:wrap;gap:.3rem}
+.cv-doc .cv-tag{font-size:.67rem;padding:.2rem .58rem;border-radius:2px;border:1px solid rgba(201,168,76,.2);color:var(--teal);background:rgba(13,92,99,.05);font-weight:500}
+.cv-doc .cv-tag.soft{color:var(--rust);background:rgba(194,75,42,.05);border-color:rgba(194,75,42,.15)}
+.cv-doc .cv-skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.cv-doc .cv-skill-group-title{font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.4rem}
+.cv-doc .cv-langs{display:flex;flex-wrap:wrap;gap:.4rem}
+.cv-doc .cv-lang{font-size:.75rem;padding:.28rem .78rem;border-radius:2px;background:var(--paper);border:1px solid var(--border);color:var(--text)}
+.cv-doc .cv-lang strong{color:var(--ink);font-weight:600}
+.cv-doc .cvdiv{height:1px;background:var(--border);margin:.35rem 0 1.1rem}
+
+/* CTA BOTTOM */
+.cv-cta{text-align:center;margin-top:2.5rem;padding:2rem;background:var(--cream);border-radius:4px;border:1px solid var(--border)}
+.cv-cta p{font-size:.85rem;color:var(--muted);margin-bottom:1rem}
+.cv-cta strong{color:var(--ink)}
+
+/* PRINT */
+@media print{
+  .topbar,.cv-meta,.cv-cta,.cv-badge{display:none!important}
+  body{background:#fff}
+  .cv-container{margin:0;padding:0;max-width:100%}
+  .cv-doc{border:none;box-shadow:none;padding:1.5rem;border-radius:0}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="https://cvitaepy.netlify.app" class="topbar-logo">CV<em>itae</em></a>
+  <div class="topbar-actions">
+    <button class="btn btn-gold" onclick="printCV()"><i class="fas fa-download"></i> Guardar PDF</button>
+    <a href="https://wa.me/595992954169?text=Hola!%20Recibi%20mi%20CV%20y%20quiero%20consultar" target="_blank" class="btn btn-wa"><i class="fab fa-whatsapp"></i> Consultar</a>
+    <a href="https://cvitaepy.netlify.app" class="btn btn-ghost"><i class="fas fa-home"></i> Inicio</a>
+  </div>
+</div>
+
+<div id="loading" class="loading">
+  <div class="spin"></div>
+  <p>Cargando tu CV...</p>
+</div>
+
+<div id="errorBox" class="error-box" style="display:none">
+  <i class="fas fa-exclamation-circle"></i>
+  <h2>CV no encontrado</h2>
+  <p>El link puede haber expirado o ser incorrecto. Escribinos por WhatsApp y te lo reenviamos.</p>
+  <br>
+  <a href="https://wa.me/595992954169" target="_blank" class="btn btn-wa"><i class="fab fa-whatsapp"></i> Escribir por WhatsApp</a>
+</div>
+
+<div id="cvContainer" class="cv-container" style="display:none">
+  <div class="cv-meta">
+    <h1 id="cvTitle">Tu CV Profesional</h1>
+    <p id="cvSubtitle"></p>
+    <div class="cv-badge"><i class="fas fa-check-circle"></i> Generado por CVitae con IA</div>
+  </div>
+  <div id="cvContent"></div>
+  <div class="cv-cta">
+    <p>¿Necesitás actualizar tu CV o crear un portafolio web?<br><strong>Escribinos y te ayudamos.</strong></p>
+    <div style="display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+      <a href="https://wa.me/595992954169" target="_blank" class="btn btn-wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      <a href="https://cvitaepy.netlify.app" class="btn btn-gold"><i class="fas fa-wand-magic-sparkles"></i> Generar otro CV</a>
+    </div>
+  </div>
+</div>
+
+<script>
+var id = new URLSearchParams(window.location.search).get('id');
+
+if (!id) {
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('errorBox').style.display = 'block';
+} else {
+  fetch('/.netlify/functions/get-cv?id=' + encodeURIComponent(id))
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      document.getElementById('loading').style.display = 'none';
+      if (data.error) {
+        document.getElementById('errorBox').style.display = 'block';
+        return;
+      }
+      document.getElementById('cvTitle').textContent = data.name + ' — CV Profesional';
+      document.getElementById('cvSubtitle').textContent = data.profession + (data.job ? ' · Aplicando a: ' + data.job : '');
+      document.getElementById('cvContent').innerHTML = data.cvHtml;
+      document.getElementById('cvContainer').style.display = 'block';
+      document.title = data.name + ' — CV · CVitae';
+    })
+    .catch(function() {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('errorBox').style.display = 'block';
+    });
+}
+
+function printCV() {
+  window.print();
+}
+</script>
+</body>
+</html>
